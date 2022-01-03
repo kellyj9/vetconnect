@@ -7,12 +7,31 @@ For this assignment, you will submit a high-level outline of your project. This 
 ## Submission Instructions
 
 ### Overview
-Include overview here
+My project idea is for a web application to be built in Spring Boot called Insightful.  Insightful will be an online forum for employees of a company to post their ideas and insights in regards to their workplace.  This project idea is generic enough to be useful to any company.
+
+Since employee insights in the workplace are sometimes overlooked, not acknowledged, or not transparent across the company, this application would increase transparency across the entire company, give employees a place to be heard, and offer management a tool to feel the pulse of the company.
+
 ### Features
-Include Features here
+  - Users can create and authenticate accounts.  However, their work email address must be in the database already in order to register.
+  - Users can create, edit, and delete their own posts.
+  - Users can comment on other user's posts.
+  - Users can upvote or downvote original posts.  (Only one upvote per user per post.)
+  - Users can sort posts either by the original post date or the number of upvotes.
+
+
 ### Technologies
-Include Technologies here
+  - Spring Boot
+  - Java
+  - Hibernate
+  - SQL
+  - MySQL
+  - Thymeleaf templates
+
 ### What I'll Have to Learn
-Include what you will need to learn here
+  - Sorting and Pagination.
+  - Ensuring users can only delete and edit their own posts.
+  - Best practices for database design / normalization and implementing the MVC architecture.
+
 ### Project Tracker
-Link to your Trello board here
+Link to the Trello board:
+https://trello.com/b/LXtMwdXr/project-board
