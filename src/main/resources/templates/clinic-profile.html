@@ -18,7 +18,9 @@
     <h2>Phone Number</h2>
     <p th:text="${clinic.phoneNumber}"></p>
     <h2>Website</h2>
-    <p th:text="${clinic.website}"></p>
+    <a th:href="@{'https://' + ${clinic.website}}">
+      <p th:text="${clinic.website}"></p>
+    </a>
 </div>
 </body>
 </html>
