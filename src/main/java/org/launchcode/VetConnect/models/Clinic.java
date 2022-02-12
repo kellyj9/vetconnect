@@ -1,24 +1,43 @@
 package org.launchcode.VetConnect.models;
 
 
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Clinic extends AbstractEntity{
 
+    @NotBlank(message = "Name required")
     private String name;
-    private String phoneNumber;
+
+    @NotBlank(message = "Address required")
     private String address;
+
+    @NotBlank(message = "City required")
     private String city;
+
+    @NotBlank(message = "State required")
     private String state;
+
+    @NotBlank(message = "Zip required")
+    @NumberFormat
     private String zip;
+
+    @NotBlank(message = "Phone Number required")
+    @NumberFormat
+    private String phoneNumber;
+
+    @NotBlank(message = "Website required")
     private String website;
-    private int emergency;
+
+    private String emergency;
 
     public Clinic() {}
 
 //    Initialize the id and value fields
-    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, int emergency) {
+    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, String emergency) {
         super();
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -87,11 +106,11 @@ public class Clinic extends AbstractEntity{
         this.website = website;
     }
 
-    public int getEmergency() {
+    public String getEmergency() {
         return emergency;
     }
 
-    public void setEmergency(int emergency) {
+    public void setEmergency(String emergency) {
         this.emergency = emergency;
     }
 }
