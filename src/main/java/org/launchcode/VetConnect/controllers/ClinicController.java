@@ -1,7 +1,9 @@
 package org.launchcode.VetConnect.controllers;
 
 import org.launchcode.VetConnect.models.Clinic;
+import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
+import org.launchcode.VetConnect.models.data.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ public class ClinicController {
     @Autowired
     ClinicRepository clinicRepository;
 
+    @Autowired
+    RequestRepository requestRepository;
+
     @GetMapping(value = "add")
     public String addAClinicForm(Model model) {
         model.addAttribute(new Clinic());
@@ -27,12 +32,12 @@ public class ClinicController {
     }
 
     @PostMapping(value = "add")
-    public String addAClinicRequest(@ModelAttribute @Valid Clinic newClinic, Errors errors, HttpServletRequest request, Model model) {
+    public String addAClinicRequest(@ModelAttribute @Valid Request newRequest, Errors errors, HttpServletRequest request, Model model) {
         if(errors.hasErrors()) {
             return "add-a-clinic";
         }
 
-        Clinic existingClinic = clinicRepository.findByName(newClinic.getName());
+        Clinic existingClinic = clinicRepository.findByName(newRequest.getName());
 
         if(existingClinic != null) {
             errors.rejectValue("name", "name.alreadyexists", "A clinic with that name already exists");
@@ -40,13 +45,15 @@ public class ClinicController {
         }
 
 
-        if (newClinic.getEmergency() != null) {
-            newClinic.setEmergency("1");
+        if (newRequest.getEmergency() != null) {
+            newRequest.setEmergency("1");
         } else {
-            newClinic.setEmergency("0");
+            newRequest.setEmergency("0");
         }
 
-        clinicRepository.save(newClinic);
+        newRequest.setStatus("Pending");
+
+        requestRepository.save(newRequest);
 
         return "redirect:";
     }
