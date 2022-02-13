@@ -30,6 +30,7 @@ public class User extends AbstractEntity {
     public User() {}
 
     public User(String userType, String firstName, String lastName, String emailAddress, String password) {
+        super();
         this.userType = userType;
         this.firstName = firstName;
         this.lastName = lastName;
