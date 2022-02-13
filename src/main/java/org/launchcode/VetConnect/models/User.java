@@ -44,6 +44,10 @@ public class User extends AbstractEntity {
         this.pwHash = encoder.encode(password);
     }
 
+    public List<Request> getRequests() {
+        return requests;
+    }
+
     public String getUserType() {
         return userType;
     }
