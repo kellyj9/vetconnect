@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ClinicRepository extends CrudRepository<Clinic, Integer> {
+public interface ClinicRepository extends CrudRepository<Clinic, Long> {
 
     List<Clinic> findByCityIgnoreCaseContaining(String city);
     List<Clinic> findByStateIgnoreCaseContaining(String state);

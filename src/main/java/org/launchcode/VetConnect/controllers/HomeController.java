@@ -54,7 +54,7 @@ public class HomeController {
     }
 
     @GetMapping("clinic-profile")
-    public String displayClinicProfile(@RequestParam Integer clinicId, Model model)
+    public String displayClinicProfile(@RequestParam Long clinicId, Model model)
     {
         model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
         return "clinic-profile";
