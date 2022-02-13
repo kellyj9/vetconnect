@@ -52,7 +52,7 @@ public class ClinicController {
     @GetMapping(value = "add")
     public String addAClinicForm(Model model, HttpServletRequest request) {
         if (getUserFromSession(request.getSession()) == null) {
-            return "login";
+            return "redirect:login";
         }
 
         model.addAttribute(new Request());
@@ -72,7 +72,6 @@ public class ClinicController {
             errors.rejectValue("name", "name.alreadyexists", "A clinic with that name already exists");
             return "add-a-clinic";
         }
-
 
         if (newRequest.getEmergency() != null) {
             newRequest.setEmergency("1");
