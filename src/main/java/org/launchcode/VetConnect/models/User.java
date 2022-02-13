@@ -3,8 +3,11 @@ package org.launchcode.VetConnect.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User extends AbstractEntity {
@@ -24,6 +27,9 @@ public class User extends AbstractEntity {
 
     @NotBlank
     private String pwHash;
+
+    @OneToMany
+    private final List<Request> requests = new ArrayList<>();
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 

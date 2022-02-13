@@ -44,7 +44,7 @@ public class Request extends AbstractEntity {
     @OneToOne
     private Clinic clinic;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @CreationTimestamp
