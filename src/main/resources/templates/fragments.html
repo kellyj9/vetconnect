@@ -39,9 +39,14 @@
                     </a>
                 </li>
             </ul>
-            <a th:href="@{/login}">
-                <span class="navbar-text">Login</span>
-            </a>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:href="${session.isEmpty()} ? @{/login} :  @{/logout}"
+                       th:text="${session.isEmpty()} ? 'Login' : 'Logout'">
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
