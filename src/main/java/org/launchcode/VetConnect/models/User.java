@@ -28,7 +28,7 @@ public class User extends AbstractEntity {
     @NotBlank
     private String pwHash;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private final List<Request> requests = new ArrayList<>();
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
