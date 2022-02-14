@@ -1,13 +1,18 @@
 package org.launchcode.VetConnect.models;
 
-
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
-public class Clinic extends AbstractEntity{
+public class Request extends AbstractEntity {
 
     @NotBlank(message = "Name required")
     private String name;
@@ -34,36 +39,54 @@ public class Clinic extends AbstractEntity{
 
     private String emergency;
 
-    public Clinic() {}
+    private String status;
 
-//    Initialize the id and value fields
-    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, String emergency) {
-        super();
+    @OneToOne
+    private Clinic clinic;
+
+    @ManyToOne
+    private User user;
+
+    @CreationTimestamp
+    private Date createdTimestamp;
+
+    public Request() {};
+
+    public Request(String name, String address, String city, String state, String zip, String phoneNumber, String website, String emergency, String status, User user) {
         this.name = name;
-        this.phoneNumber = phoneNumber;
         this.address = address;
         this.city = city;
         this.state = state;
         this.zip = zip;
+        this.phoneNumber = phoneNumber;
         this.website = website;
         this.emergency = emergency;
+        this.status = status;
+        this.user = user;
     }
 
-    //    Getters and Setters
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Clinic getClinic() {
+        return clinic;
+    }
+
+    public void setClinic(Clinic clinic) {
+        this.clinic = clinic;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {
@@ -98,6 +121,14 @@ public class Clinic extends AbstractEntity{
         this.zip = zip;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getWebsite() {
         return website;
     }
@@ -112,5 +143,21 @@ public class Clinic extends AbstractEntity{
 
     public void setEmergency(String emergency) {
         this.emergency = emergency;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(Date createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
     }
 }
