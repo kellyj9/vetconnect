@@ -15,6 +15,20 @@ public class DashboardController extends VetConnectController{
     @Autowired
     RequestRepository requestRepository;
 
+    @GetMapping(value="dashboard")
+    public String getDashboard(Model model, HttpServletRequest request) {
+        User user = getUserFromSession(request.getSession(false));
+
+        if (user.getUserType().equals("petOwner")) {
+            return "redirect:dashboard-pet-owner";
+        }
+        else if (user.getUserType().equals("vet")) {
+                return "redirect:dashboard-vet";
+        }
+        else {
+            return "redirect:error";
+        }
+    }
 
     @GetMapping(value="dashboard-pet-owner")
     public String displayDashboardPetOwner(Model model, HttpServletRequest request) {

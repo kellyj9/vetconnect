@@ -95,7 +95,7 @@ public class AuthenticationController extends VetConnectController{
 
         setUserInSession(request.getSession(), theUser);
 
-        return "redirect:";
+        return "redirect:dashboard";
     }
 
     @GetMapping("/logout")
