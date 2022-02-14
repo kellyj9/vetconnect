@@ -5,7 +5,6 @@ import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.User;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.launchcode.VetConnect.models.data.RequestRepository;
-import org.launchcode.VetConnect.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
-public class ClinicController {
+public class ClinicController extends VetConnectController {
 
     @Autowired
     ClinicRepository clinicRepository;
@@ -28,39 +25,16 @@ public class ClinicController {
     @Autowired
     RequestRepository requestRepository;
 
-    @Autowired
-    UserRepository userRepository;
 
-    private static final String userSessionKey = "user";
-
-    public User getUserFromSession(HttpSession session) {
-        Long userId = (Long) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
-
-        Optional<User> user = userRepository.findById(userId);
-
-        if (user.isEmpty()) {
-            return null;
-        }
-
-        return user.get();
-    }
-
-
-    @GetMapping(value = "add")
+    @GetMapping(value = "add-a-clinic")
     public String addAClinicForm(Model model, HttpServletRequest request) {
-        if (getUserFromSession(request.getSession()) == null) {
-            return "redirect:login";
-        }
 
         model.addAttribute(new Request());
 
         return "add-a-clinic";
     }
 
-    @PostMapping(value = "add")
+    @PostMapping(value = "add-a-clinic")
     public String addAClinicRequest(@ModelAttribute @Valid Request newRequest, Errors errors, HttpServletRequest request, Model model) {
         if(errors.hasErrors()) {
             return "add-a-clinic";
@@ -79,13 +53,13 @@ public class ClinicController {
             newRequest.setEmergency("0");
         }
 
-        User user = getUserFromSession(request.getSession());
+        User user = getUserFromSession(request.getSession(false));
         newRequest.setUser(user);
         newRequest.setStatus("Pending");
 
         requestRepository.save(newRequest);
 
-        return "redirect:";
+        return "redirect:dashboard";
     }
 
 }
