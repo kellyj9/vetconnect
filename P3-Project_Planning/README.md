@@ -91,6 +91,18 @@ For this assignment, you'll create some initial plans for your project.
 > Contributed by Michael Huerta
 ![Registration - Vet/Clinic](/P3-Project_Planning/Michael%20Huerta/Screen%20Shot%202022-01-24%20at%205.55.21%20PM.png)
 
+- Dashboard - Pet Owner
+> Contributed by Kelly Jones
+![Dashboard - PetOwner](/P3-Project_Planning/kelly/dashboard-pet-owner.jpg)
+
+- Dashboard - Vet
+> Contributed by Kelly Jones
+![Dashboard - PetOwner](/P3-Project_Planning/kelly/dashboard-vet.jpg)
+
+- Dashboard - Admin
+> Contributed by Kelly Jones
+![Dashboard - PetOwner](/P3-Project_Planning/kelly/dashboard-admin.jpg)
+
 ### Project Tracker
 
 https://trello.com/b/ORoboRNu/launch-code-project
