@@ -28,9 +28,6 @@ public class ClinicController extends VetConnectController {
 
     @GetMapping(value = "add")
     public String addAClinicForm(Model model, HttpServletRequest request) {
-//        if (getUserFromSession(request.getSession()) == null) {
-//            return "redirect:login";
-//        }
 
         model.addAttribute(new Request());
 
@@ -56,7 +53,7 @@ public class ClinicController extends VetConnectController {
             newRequest.setEmergency("0");
         }
 
-        User user = getUserFromSession(request.getSession());
+        User user = getUserFromSession(request.getSession(false));
         newRequest.setUser(user);
         newRequest.setStatus("Pending");
 
