@@ -26,7 +26,7 @@ public class ClinicController extends VetConnectController {
     RequestRepository requestRepository;
 
 
-    @GetMapping(value = "add")
+    @GetMapping(value = "add-a-clinic")
     public String addAClinicForm(Model model, HttpServletRequest request) {
 
         model.addAttribute(new Request());
@@ -34,7 +34,7 @@ public class ClinicController extends VetConnectController {
         return "add-a-clinic";
     }
 
-    @PostMapping(value = "add")
+    @PostMapping(value = "add-a-clinic")
     public String addAClinicRequest(@ModelAttribute @Valid Request newRequest, Errors errors, HttpServletRequest request, Model model) {
         if(errors.hasErrors()) {
             return "add-a-clinic";
@@ -59,7 +59,7 @@ public class ClinicController extends VetConnectController {
 
         requestRepository.save(newRequest);
 
-        return "redirect:";
+        return "redirect:dashboard";
     }
 
 }
