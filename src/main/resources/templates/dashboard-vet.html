@@ -1,10 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8" />
-    <title></title>
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
+
+<nav th:replace="fragments :: nav"></nav>
+<header><h1>My Dashboard (I am a vet)</h1></header>
+<div class="container mb-3">
+    <div class="accordion accordion-flush" id="accordionAddClinic">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <strong>Add a clinic to the VetConnect listing</strong>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddClinic">
+                <div class="accordion-body">
+                    <p>
+                    <strong>Step 1: </strong>Search for the clinic in the the VetConnect listing.
+                    </p>
+                    <p>
+                        <strong>Step 2: </strong>If the clinic is not in the search results, click the button to 'Add a Clinic'.
+                    </p>
+                    <p>
+                        <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container g-6">
+    <h5>My requests to 'Add a Clinic':</h5>
+    <p th:if="${requests.isEmpty()}">No requests yet.</p>
+    <th:block th:each="request : ${requests}">
+        <table class="table table-sm table-light table-borderless">
+            <tr>
+                <th class="shrink">Status: </th>
+                <td class="expand" th:text="${request.status}"></td>
+            </tr>
+            <tr>
+                <th class="shrink">Submitted On: </th>
+                <td class="expand"
+                    th:text="${#dates.format(request.createdTimestamp, 'dd-MMMM-yyyy HH:mm:ss')}">
+                </td>
+            </tr>
+            <tr>
+                <th class="shrink">Clinic Name: </th>
+                <td class="expand" th:text="${request.name}"></td>
+            </tr>
+            <tr>
+                <th class="shrink">Address: </th>
+                <td class="expand" th:text="${request.address}"></td>
+            </tr>
+            <tr>
+                <th class="shrink">City, State Zip: </th>
+                <td class="expand" th:text="${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+            </tr>
+            <tr>
+                <th class="shrink">Phone Number: </th>
+                <td class="expand" th:text="${request.phoneNumber}"></td>
+            </tr>
+            <tr>
+                <th class="shrink">Website: </th>
+                <td class="expand" th:text="${request.website}"></td>
+            </tr>
+            <tr>
+                <th class="shrink">Emergencies? </th>
+                <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+            </tr>
+        </table>
+    </th:block>
+</div>
 
 </body>
 </html>
