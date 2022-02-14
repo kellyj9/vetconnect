@@ -9,9 +9,12 @@
     <h1>Search Results</h1>
     <p th:if="${results_heading}" th:text="${results_heading}"></p>
 </header>
-
+<div th:if="${!session.isEmpty()}" class="container  mb-3">
+    <Strong>Don't see your clinic in these search results? </Strong>
+    <a th:href="@{/add-a-clinic}" th:text="'Add a Clinic!'" class="btn btn-primary btn-md" role="button"></a>
+</div>
 <div class="container">
-<th:block th:each="clinic : ${clinics}">
+    <th:block th:each="clinic : ${clinics}">
     <table class="table table-sm table-light table-borderless">
         <tr>
             <td> <a th:href="@{/clinic-profile(clinicId=${clinic.id})}" th:text="${clinic.name}"></a></td>
@@ -23,7 +26,7 @@
             <td th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></td>
         </tr>
     </table>
-</th:block>
+    </th:block>
 </div>
 
 </body>
