@@ -1,20 +1,18 @@
 package org.launchcode.VetConnect.controllers;
 
-
-import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.launchcode.VetConnect.models.Clinic;
+import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class HomeController extends VetConnectController {
 
     @Autowired
     private ClinicRepository clinicRepository;
