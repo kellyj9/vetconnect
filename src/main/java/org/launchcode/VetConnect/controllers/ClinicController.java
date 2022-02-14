@@ -28,9 +28,9 @@ public class ClinicController extends VetConnectController {
 
     @GetMapping(value = "add")
     public String addAClinicForm(Model model, HttpServletRequest request) {
-        if (getUserFromSession(request.getSession()) == null) {
-            return "redirect:login";
-        }
+//        if (getUserFromSession(request.getSession()) == null) {
+//            return "redirect:login";
+//        }
 
         model.addAttribute(new Request());
 
