@@ -19,6 +19,22 @@ h2 {
     font-size: 20px;
 }
 
+table th.shrink {
+    white-space: nowrap;
+}
+
+table th.expand {
+    width: 99%;
+}
+
+table td.shrink {
+    white-space: nowrap;
+}
+
+table td.expand {
+    width: 99%;
+}
+
 /* Bootstrap modification */
 .navbar-brand {
     font-size: x-large;
