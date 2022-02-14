@@ -5,20 +5,33 @@
 <body>
 <nav th:replace="fragments :: nav"></nav>
 
-<header>
+<header >
     <h1>Clinic Profile</h1>
 </header>
 
-<div class="cprofile">
-  <h2>Clinic Name</h2>
-  <p th:text="${clinic.name}"></p>
+<div class="cprofile row p-4 m-auto ">
+  <div class="col-sm d-flex-row m-auto p-2">
+    <h2>Clinic Name</h2>
+    <p th:text="${clinic.name}"></p>
     <h2>Address</h2>
-    <p th:text="${clinic.address}"></p>
-    <p th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></p>
+      <div>
+        <p class="mb-1" th:text="${clinic.address}"></p>
+        <p th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></p>
+      </div>
     <h2>Phone Number</h2>
     <p th:text="${clinic.phoneNumber}"></p>
     <h2>Website</h2>
-    <p th:text="${clinic.website}"></p>
+    <a th:href="@{'https://' + ${clinic.website}}">
+      <p th:text="${clinic.website}"></p>
+    </a>
+  </div>
+  <div class="col-sm">
+    <div>
+      <a th:href="@{'https://maps.google.com/?q=' + ' ' + ${clinic.address} + ' ' + ${clinic.city} + ' ' + ${clinic.state} + ' ' + ${clinic.zip}}">
+        <img th:src="@{'https://maps.googleapis.com/maps/api/staticmap?center=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&markers=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&zoom=12&size=400x400&key=AIzaSyCjFOLSO6Os1tn4eSNktZ_tyKEm6yWUHh4'}">
+      </a>
+    </div>
+  </div>
 </div>
 </body>
 </html>
