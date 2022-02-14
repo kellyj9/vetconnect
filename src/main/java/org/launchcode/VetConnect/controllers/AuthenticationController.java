@@ -57,7 +57,7 @@ public class AuthenticationController extends VetConnectController{
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
 
-        return "redirect:";
+        return "redirect:dashboard";
     }
 
     @GetMapping(value="login")
@@ -65,7 +65,6 @@ public class AuthenticationController extends VetConnectController{
         model.addAttribute(new LoginFormDTO());
         return "login";
     }
-
 
     @PostMapping("/login")
     public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO,
