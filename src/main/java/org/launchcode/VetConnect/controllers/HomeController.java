@@ -38,11 +38,11 @@ public class HomeController extends VetConnectController {
             List<Clinic> results = ClinicData.findClinic(term, clinicRepository.findAll());
 
             if (results.isEmpty()) {
-                model.addAttribute("results_heading", "No search results found for " + term + "'");
+                model.addAttribute("results_heading", "No search results found for " + term + "");
             }
             else {
                 // search results were found!
-                model.addAttribute("results_heading", "Search results for " + term + "'");
+                model.addAttribute("results_heading", "Search results for " + term + "");
                 model.addAttribute("clinics", results);
             }
         }
