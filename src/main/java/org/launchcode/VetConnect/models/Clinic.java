@@ -5,6 +5,8 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Clinic extends AbstractEntity{
@@ -21,12 +23,13 @@ public class Clinic extends AbstractEntity{
     @NotBlank(message = "State required")
     private String state;
 
-    @NotBlank(message = "Zip required")
+    @NotBlank(message="Zip required")
     @NumberFormat
+    @Size(min=6,max=6, message="Must be a valid Zip Code")
     private String zip;
 
     @NotBlank(message = "Phone Number required")
-    @NumberFormat
+    @Pattern(regexp="(^$|[0-9]{10})", message="Must be a valid phone number")
     private String phoneNumber;
 
     @NotBlank(message = "Website required")

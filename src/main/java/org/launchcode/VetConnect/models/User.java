@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,11 @@ public class User extends AbstractEntity {
     @NotBlank
     private String userType;
 
+    @Size(min = 2, max = 26)
     @NotBlank
     private String firstName;
 
+    @Size(min = 2, max = 26)
     @NotBlank
     private String lastName;
 
