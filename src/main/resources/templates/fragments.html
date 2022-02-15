@@ -57,5 +57,30 @@
     </div>
 </nav>
 
+<div th:fragment="add-clinic-instructions" class="container mb-3">
+    <div class="accordion accordion-flush" id="accordionAddClinic">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <strong>How to add a clinic to the VetConnect listing</strong>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddClinic">
+                <div class="accordion-body">
+                    <p>
+                        <strong>Step 1: </strong>Search for the clinic in the VetConnect listing.
+                    </p>
+                    <p>
+                        <strong>Step 2: </strong>If the clinic is not in the search results, click the button to 'Add a Clinic'.
+                    </p>
+                    <p>
+                        <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
