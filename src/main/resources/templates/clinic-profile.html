@@ -19,7 +19,7 @@
         <p th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></p>
       </div>
     <h2>Phone Number</h2>
-    <p th:text="${clinic.phoneNumber}"></p>
+    <p th:text="${clinic.phoneNumberToString()}"></p>
     <h2>Website</h2>
     <a th:href="@{'https://' + ${clinic.website}}">
       <p th:text="${clinic.website}"></p>
