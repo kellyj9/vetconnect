@@ -60,18 +60,18 @@
 <div th:fragment="add-clinic-instructions" class="container mb-3">
     <div class="accordion accordion-flush" id="accordionAddClinic">
         <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
+            <h3 class="accordion-header" id="headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     <strong>How to add a clinic to the VetConnect listing</strong>
                 </button>
-            </h2>
+            </h3>
             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddClinic">
                 <div class="accordion-body">
                     <p>
                         <strong>Step 1: </strong>Search for the clinic in the VetConnect listing.
                     </p>
                     <p>
-                        <strong>Step 2: </strong>If the clinic is not in the search results, click the button to 'Add a Clinic'.
+                        <strong>Step 2: </strong>If the clinic is not in the search results, click the button to <a href="/add-a-clinic">'Add a Clinic'</a>.
                     </p>
                     <p>
                         <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
@@ -80,6 +80,45 @@
             </div>
         </div>
     </div>
+</div>
+
+<div th:fragment="requests" class="container g-6">
+    <h2>My requests to 'Add a Clinic':</h2>
+    <p th:if="${requests.isEmpty()}">No requests yet.</p>
+    <div>
+        <th:block th:each="request : ${requests}">
+            <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+                <h3 th:text="${request.name}" class="request-heading"></h3>
+                <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}">
+                     </div>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th class="shrink">Status: </th>
+                        <td class="expand" th:text="${request.status}"></td>
+                    </tr>
+
+                    <tr>
+                        <th class="shrink">Address: </th>
+                        <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Phone Number: </th>
+                        <td class="expand" th:text="${request.phoneNumberToString()}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Website: </th>
+                            <td class="expand" th:text="${request.website}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Emergencies? </th>
+                        <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </th:block>
+    </div>
+
 </div>
 
 </body>
