@@ -14,6 +14,11 @@
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
         crossorigin="anonymous">
     </script>
+    <script>
+        let filteredRequests = "[[${filteredRequests}]]"
+    </script>
+    <script src="../js/index.js"></script>
+
 </head>
 <body>
 
@@ -82,9 +87,45 @@
     </div>
 </div>
 
-<div th:fragment="requests" class="container g-6">
+<div th:fragment="dashboardHeader" class="container g-6">
     <h2>My requests to 'Add a Clinic':</h2>
+    <div class="d-flex flex-row align-items-center">
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="approved" id="approvedCheck" th:checked="${filteredRequests == 'approved'}">
+            <label class="form-check-label" for="approvedCheck">
+                Approved
+            </label>
+        </div>
+
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="pending" id="pendingCheck"  th:checked="${filteredRequests == 'pending'}">
+            <label class="form-check-label" for="pendingCheck">
+                Pending
+            </label>
+        </div>
+
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="declined" id="declinedCheck"  th:checked="${filteredRequests == 'declined'}">
+            <label class="form-check-label" for="declinedCheck">
+                Declined
+            </label>
+        </div>
+
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="all" id="allCheck"  th:checked="${filteredRequests == 'all'}">
+            <label class="form-check-label" for="allCheck">
+                View All
+            </label>
+        </div>
+
+        <button class="btn btn-primary" onclick="handleFilter()">Filter</button>
+    </div>
+
     <p th:if="${requests.isEmpty()}">No requests yet.</p>
+
+</div>
+
+<div th:fragment="allRequests" class="container g-6">
     <div>
         <th:block th:each="request : ${requests}">
             <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
@@ -118,7 +159,151 @@
 
         </th:block>
     </div>
+</div>
 
+<div th:fragment="approvedRequests" class="container g-6">
+    <div>
+        <th:block th:each="request : ${requests}" th:if="${request.status} == 'Approved'">
+            <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+                <h3 th:text="${request.name}" class="request-heading"></h3>
+                <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}">
+                </div>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th class="shrink">Status: </th>
+                        <td class="expand" th:text="${request.status}"></td>
+                    </tr>
+
+                    <tr>
+                        <th class="shrink">Address: </th>
+                        <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Phone Number: </th>
+                        <td class="expand" th:text="${request.phoneNumberToString()}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Website: </th>
+                        <td class="expand" th:text="${request.website}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Emergencies? </th>
+                        <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </th:block>
+    </div>
+</div>
+
+
+<div th:fragment="approvedRequests" class="container g-6">
+    <div>
+        <th:block th:each="request : ${requests}" th:if="${request.status} == 'Approved'">
+            <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+                <h3 th:text="${request.name}" class="request-heading"></h3>
+                <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}">
+                </div>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th class="shrink">Status: </th>
+                        <td class="expand" th:text="${request.status}"></td>
+                    </tr>
+
+                    <tr>
+                        <th class="shrink">Address: </th>
+                        <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Phone Number: </th>
+                        <td class="expand" th:text="${request.phoneNumberToString()}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Website: </th>
+                        <td class="expand" th:text="${request.website}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Emergencies? </th>
+                        <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </th:block>
+    </div>
+</div>
+
+<div th:fragment="pendingRequests" class="container g-6">
+    <div>
+        <th:block th:each="request : ${requests}" th:if="${request.status} == 'Pending'">
+            <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+                <h3 th:text="${request.name}" class="request-heading"></h3>
+                <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}">
+                </div>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th class="shrink">Status: </th>
+                        <td class="expand" th:text="${request.status}"></td>
+                    </tr>
+
+                    <tr>
+                        <th class="shrink">Address: </th>
+                        <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Phone Number: </th>
+                        <td class="expand" th:text="${request.phoneNumberToString()}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Website: </th>
+                        <td class="expand" th:text="${request.website}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Emergencies? </th>
+                        <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </th:block>
+    </div>
+</div>
+
+<div th:fragment="declinedRequests" class="container g-6">
+    <div>
+        <th:block th:each="request : ${requests}" th:if="${request.status} == 'Declined'">
+            <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+                <h3 th:text="${request.name}" class="request-heading"></h3>
+                <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}">
+                </div>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <th class="shrink">Status: </th>
+                        <td class="expand" th:text="${request.status}"></td>
+                    </tr>
+
+                    <tr>
+                        <th class="shrink">Address: </th>
+                        <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Phone Number: </th>
+                        <td class="expand" th:text="${request.phoneNumberToString()}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Website: </th>
+                        <td class="expand" th:text="${request.website}"></td>
+                    </tr>
+                    <tr>
+                        <th class="shrink">Emergencies? </th>
+                        <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </th:block>
+    </div>
 </div>
 
 </body>

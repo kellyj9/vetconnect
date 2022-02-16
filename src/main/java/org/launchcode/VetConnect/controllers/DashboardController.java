@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,12 +32,13 @@ public class DashboardController extends VetConnectController{
     }
 
     @GetMapping(value="dashboard-pet-owner")
-    public String displayDashboardPetOwner(Model model, HttpServletRequest request) {
+    public String displayDashboardPetOwner(Model model, HttpServletRequest request, @RequestParam(required = false) String filter) {
         User this_user = getUserFromSession(request.getSession(false));
         if (!this_user.getUserType().equals("petOwner")) {
             return "redirect:error";
         }
         model.addAttribute("requests", this_user.getRequests());
+        model.addAttribute("filteredRequests", (filter == null ? "all" : filter));
         return "dashboard-pet-owner";
     }
 
