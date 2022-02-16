@@ -15,16 +15,14 @@
 </div>
 <div class="container">
     <th:block th:each="clinic : ${clinics}">
-        <div class="bg-light px-3 pt-2 pb-1 my-3 rounded">
+        <div class="bg-light px-3 pt-2 pb-1 my-3 rounded position-relative">
+            <div class="position-absolute top-0 end-0 px-3 py-1 m-3 bg-danger text-white font-weight-bold rounded" th:if="${clinic.emergency == '1'}">Emergency Clinic</div>
             <table class="table table-sm table-light table-borderless">
                 <tr>
-                    <td> <a th:href="@{/clinic-profile(clinicId=${clinic.id})}" th:text="${clinic.name}"></a></td>
+                    <td> <h3><a class="" th:href="@{/clinic-profile(clinicId=${clinic.id})}" th:text="${clinic.name}"></a></h3> </td>
                 </tr>
                 <tr>
-                    <td th:text="${clinic.address}"></td>
-                </tr>
-                <tr>
-                    <td th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></td>
+                    <td th:text="${clinic.address} + ' ' + ${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></td>
                 </tr>
             </table>
         </div>

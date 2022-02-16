@@ -92,3 +92,7 @@ table td.expand {
 .request-heading {
     font-size: 2rem;
 }
+
+a {
+    text-decoration: none;
+}
