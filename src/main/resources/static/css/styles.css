@@ -76,3 +76,23 @@ table td.expand {
     opacity: 80%;
     cursor: pointer;
 }
+
+.pending {
+    background-color: rgb(255, 255, 153, 0.75)!important;
+}
+
+.approved {
+    background-color: rgb(178, 255, 153, .75)!important;
+}
+
+.declined {
+    background-color: rgb(255, 153, 153, .75)!important;
+}
+
+.request-heading {
+    font-size: 2rem;
+}
+
+a {
+    text-decoration: none;
+}

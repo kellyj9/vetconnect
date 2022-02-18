@@ -63,8 +63,10 @@ public class Clinic extends AbstractEntity{
     }
 
     public String getPhoneNumber() {
-        return phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+        return phoneNumber;
     }
+
+    public String phoneNumberToString() {return phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");}
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
