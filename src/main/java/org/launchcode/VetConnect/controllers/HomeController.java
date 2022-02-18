@@ -2,8 +2,10 @@ package org.launchcode.VetConnect.controllers;
 
 
 import org.launchcode.VetConnect.models.ClinicData;
+import org.launchcode.VetConnect.models.Review;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.launchcode.VetConnect.models.Clinic;
+import org.launchcode.VetConnect.models.data.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HomeController extends VetConnectController {
@@ -52,7 +55,15 @@ public class HomeController extends VetConnectController {
     @GetMapping("clinic-profile")
     public String displayClinicProfile(@RequestParam Long clinicId, Model model)
     {
-        model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
+        Optional<Clinic> clinic = clinicRepository.findById(clinicId);
+
+        if(clinic.isPresent()) {
+            model.addAttribute("clinic", clinic.get());
+        }
+
         return "clinic-profile";
     }
+
+
+
 }
