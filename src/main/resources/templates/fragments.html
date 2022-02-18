@@ -15,9 +15,10 @@
         crossorigin="anonymous">
     </script>
     <script src="../js/index.js"></script>
-</head>
-<body>
 
+  </head>
+  
+<body>
 <nav th:fragment="nav"
      class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
@@ -83,9 +84,45 @@
     </div>
 </div>
 
-<div th:fragment="requests" class="container g-6">
+<div th:fragment="dashboardHeader" class="container g-6">
     <h2>My requests to 'Add a Clinic':</h2>
+    <div class="d-flex flex-row align-items-center">
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="approved" id="approvedCheck" th:checked="${filter == 'approved'}">
+            <label class="form-check-label" for="approvedCheck">
+                Approved
+            </label>
+        </div>
+
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="pending" id="pendingCheck"  th:checked="${filter == 'pending'}">
+            <label class="form-check-label" for="pendingCheck">
+                Pending
+            </label>
+        </div>
+
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="declined" id="declinedCheck"  th:checked="${filter == 'declined'}">
+            <label class="form-check-label" for="declinedCheck">
+                Declined
+            </label>
+        </div>
+
+        <div class="form-check mx-2">
+            <input class="form-check-input" type="radio" name="filterRadio" value="all" id="allCheck"  th:checked="${filter == null || filter == 'all'}">
+            <label class="form-check-label" for="allCheck">
+                View All
+            </label>
+        </div>
+
+        <button class="btn btn-primary" onclick="handleFilter()">Filter</button>
+    </div>
+
     <p th:if="${requests.isEmpty()}">No requests yet.</p>
+
+</div>
+
+<div th:fragment="requests" class="container g-6">
     <div>
         <th:block th:each="request : ${requests}">
             <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
@@ -119,7 +156,6 @@
 
         </th:block>
     </div>
-
 </div>
 
 </body>

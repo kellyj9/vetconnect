@@ -1,3 +1,5 @@
+// Change userType value on click
+// For userType field on Register form
 function userTypeClick(value) {
     document.getElementById('userType').value=value
 
@@ -8,6 +10,10 @@ function userTypeClick(value) {
         document.getElementById('petOwner').classList.add('bg-primary', 'text-light')
         document.getElementById('vet').classList.remove('bg-primary', 'text-light')
     }
+}
+
+function handleFilter() {
+    window.location = `/dashboard-pet-owner?filter=${document.querySelector('input[name="filterRadio"]:checked').value}`
 }
 
 function getLocation() {
@@ -22,6 +28,4 @@ function showPosition(position) {
         document.getElementById("term").value = term;
         document.getElementById("searchForm").submit();
     })
-
-
 }
