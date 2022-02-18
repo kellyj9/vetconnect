@@ -4,9 +4,13 @@ package org.launchcode.VetConnect.models;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Clinic extends AbstractEntity{
@@ -37,6 +41,9 @@ public class Clinic extends AbstractEntity{
     private String website;
 
     private String emergency;
+
+    @OneToMany(mappedBy = "clinic")
+    private final List<Review> reviews = new ArrayList<>();
 
     public Clinic() {}
 
@@ -118,5 +125,9 @@ public class Clinic extends AbstractEntity{
 
     public void setEmergency(String emergency) {
         this.emergency = emergency;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 }
