@@ -56,6 +56,7 @@ public class ClinicController extends VetConnectController {
         User user = getUserFromSession(request.getSession(false));
         newRequest.setUser(user);
         newRequest.setStatus("Pending");
+        newRequest.setPhoneNumber(newRequest.getPhoneNumber().replaceAll("[^0-9]",""));
 
         requestRepository.save(newRequest);
 

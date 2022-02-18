@@ -21,7 +21,7 @@
     <h2>Phone Number</h2>
     <p th:text="${clinic.phoneNumberToString()}"></p>
     <h2>Website</h2>
-    <a th:href="@{'https://' + ${clinic.website}}">
+    <a th:href="@{${clinic.website}}">
       <p th:text="${clinic.website}"></p>
     </a>
   </div>
