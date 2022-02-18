@@ -1,11 +1,14 @@
 package org.launchcode.VetConnect.controllers;
 
-import org.launchcode.VetConnect.models.Clinic;
+
+import org.launchcode.VetConnect.models.ClinicData;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
+import org.launchcode.VetConnect.models.Clinic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -24,27 +27,22 @@ public class HomeController extends VetConnectController {
 
 
     @GetMapping(value="search-results")
-    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String term)
+    public String displaySearchResults(Model model, @RequestParam String term)
     {
-        if (searchType.isEmpty() || term.isEmpty())
+        if (term.isEmpty())
         {
             model.addAttribute("results_heading", "No search results were found.  Please enter a search term.");
         }
         else
         {
-            List<Clinic> results = new ArrayList<>();
-            if (searchType.equals("city")) {
-                results = clinicRepository.findByCityIgnoreCaseContaining(term);
-            }
-            else if (searchType.equals("state")) {
-                results = clinicRepository.findByStateIgnoreCaseContaining(term);
-            }
+            List<Clinic> results = ClinicData.findClinic(term, clinicRepository.findAll());
+
             if (results.isEmpty()) {
-                model.addAttribute("results_heading", "No search results found for " + searchType + ": '" + term + "'");
+                model.addAttribute("results_heading", "No search results found for " + term + "");
             }
             else {
                 // search results were found!
-                model.addAttribute("results_heading", "Search results for " + searchType + " name: '" + term + "'");
+                model.addAttribute("results_heading", "Search results for " + term + "");
                 model.addAttribute("clinics", results);
             }
         }

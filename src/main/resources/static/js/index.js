@@ -9,3 +9,19 @@ function userTypeClick(value) {
         document.getElementById('vet').classList.remove('bg-primary', 'text-light')
     }
 }
+
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(showPosition);
+}
+
+function showPosition(position) {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&result_type=neighborhood&key=AIzaSyCjFOLSO6Os1tn4eSNktZ_tyKEm6yWUHh4`).then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        const term = (data.results[0].address_components[1].long_name);
+        document.getElementById("term").value = term;
+        document.getElementById("searchForm").submit();
+    })
+
+
+}
