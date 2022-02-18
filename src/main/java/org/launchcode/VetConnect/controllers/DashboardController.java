@@ -50,7 +50,7 @@ public class DashboardController extends VetConnectController{
             filteredRequests = requestRepository.findByUserIdAndStatus(this_user.getId(), filter);
         }
         model.addAttribute("requests", filteredRequests);
-        model.addAttribute("filteredRequests", filter);
+        model.addAttribute("filter", filter);
         return "dashboard-pet-owner";
     }
 
