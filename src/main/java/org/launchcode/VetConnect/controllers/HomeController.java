@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 
 @Controller
 public class HomeController extends VetConnectController {
@@ -58,7 +59,10 @@ public class HomeController extends VetConnectController {
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
 
         if(clinic.isPresent()) {
+            OptionalDouble average = clinic.get().getReviews().stream().mapToDouble(a -> a.getReviewRating()).average();
+
             model.addAttribute("clinic", clinic.get());
+            model.addAttribute("average", average.getAsDouble());
         }
 
         return "clinic-profile";

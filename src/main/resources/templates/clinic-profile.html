@@ -32,14 +32,23 @@
       </a>
     </div>
   </div>
-  <div th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
-  <div th:if="${!session.isEmpty()}"><a th:href="'/add-a-review?clinicId=' + ${clinic.id}"><button>Add a Review</button></a></div>
 
   <section>
-    <h3>Reviews</h3>
-    <th:block th:each="review : ${clinic.getReviews()}">
-      <p th:text="${review.reviewText}"></p>
-    </th:block>
+    <div class="d-flex align-items-center">
+      <h3>Reviews</h3>
+      <div>Average rating<span th:text="${average}"></span></div>
+      <div class="mx-2" th:if="${!session.isEmpty()}"><a th:href="'/add-a-review?clinicId=' + ${clinic.id}"><button>Add a Review</button></a></div>
+    </div>
+    <div th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
+
+      <table>
+        <th:block th:each="review : ${clinic.getReviews()}">
+          <tr height="40px">
+            <td style="text-align: left" width="75%" height="75%" th:text="${review.reviewRating}"></td>
+            <td th:text="${review.reviewText}"></td>
+          </tr>
+        </th:block>
+      </table>
   </section>
 
 </div>
