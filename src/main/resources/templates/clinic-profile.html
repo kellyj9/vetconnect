@@ -9,7 +9,7 @@
     <h1>Clinic Profile</h1>
 </header>
 
-<div class="cprofile row p-4 m-auto ">
+<div class="cprofile row p-4 m-auto position-relative ">
   <div class="col-sm d-flex-row m-auto p-2">
     <h2>Clinic Name</h2>
     <p th:text="${clinic.name}"></p>
@@ -32,6 +32,16 @@
       </a>
     </div>
   </div>
+  <div th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
+  <div th:if="${!session.isEmpty()}"><a th:href="'/add-a-review?clinicId=' + ${clinic.id}"><button>Add a Review</button></a></div>
+
+  <section>
+    <h3>Reviews</h3>
+    <th:block th:each="review : ${clinic.getReviews()}">
+      <p th:text="${review.reviewText}"></p>
+    </th:block>
+  </section>
+
 </div>
 </body>
 </html>
