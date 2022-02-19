@@ -36,9 +36,9 @@
   <section>
     <div class="d-flex align-items-center">
       <h3>Reviews</h3>
-      <div>Average rating<span th:text="${average}"></span></div>
-      <div class="mx-2" th:if="${!session.isEmpty()}"><a th:href="'/add-a-review?clinicId=' + ${clinic.id}"><button>Add a Review</button></a></div>
+      <div th:text="${!(average == null)} ? 'Average rating ' + ${average} : ''"></div>
     </div>
+    <div th:if="${!session.isEmpty()} and ${!(review == null)}"><div th:replace="fragments :: add-review"></div></div>
     <div th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
 
       <table>
