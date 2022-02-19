@@ -29,3 +29,19 @@ function showPosition(position) {
         document.getElementById("searchForm").submit();
     })
 }
+
+function handleStarClick(star) {
+    const ratingStars = [...document.getElementsByClassName("rating_star")];
+    let starValue = star.control.value;
+
+
+    for(let i = starValue - 1; i >= 0; i--) {
+        ratingStars[i].classList.add("checked");
+    }
+
+
+    for(let i = starValue; i < 5; i++) {
+        ratingStars[i].classList.remove("checked");
+    }
+}
+
