@@ -15,7 +15,7 @@
         crossorigin="anonymous">
     </script>
     <script src="../js/index.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   
 <body>
@@ -156,6 +156,29 @@
 
         </th:block>
     </div>
+</div>
+
+<div th:fragment="add-review">
+        <form class="position-relative d-flex flex-column" method="POST">
+            <div class="rating d-flex align-items-center my-2 position-relative">
+                <label for="str1" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
+                <label for="str2" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
+                <label for="str3" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
+                <label for="str4" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
+                <label for="str5" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
+
+
+                <input class="d-none" id="str1" value="1" type="radio" name="rating" th:field="${review.reviewRating}" >
+                <input class="d-none" id="str2" value="2" type="radio" name="rating" th:field="${review.reviewRating}">
+                <input class="d-none" id="str3" value="3" type="radio" name="rating" th:field="${review.reviewRating}">
+                <input class="d-none" id="str4" value="4" type="radio" name="rating" th:field="${review.reviewRating}">
+                <input class="d-none" id="str5" value="5" type="radio" name="rating" th:field="${review.reviewRating}">
+            </div>
+
+            <textarea rows="4" cols="50" class="py-1 px-2" id="reviewText" th:field="${review.reviewText}"type="textarea"></textarea>
+
+            <button class="btn btn-primary mt-3" type="submit">Submit Rating</button>
+        </form>
 </div>
 
 </body>
