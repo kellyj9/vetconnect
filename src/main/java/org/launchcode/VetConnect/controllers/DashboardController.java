@@ -2,6 +2,7 @@ package org.launchcode.VetConnect.controllers;
 
 import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.User;
+import org.launchcode.VetConnect.models.data.ClaimRepository;
 import org.launchcode.VetConnect.models.data.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ public class DashboardController extends VetConnectController{
 
     @Autowired
     RequestRepository requestRepository;
+
+    @Autowired
+    ClaimRepository claimRepository;
 
     @GetMapping(value="dashboard")
     public String getDashboard(Model model, HttpServletRequest request) {
@@ -60,6 +64,8 @@ public class DashboardController extends VetConnectController{
         if (!this_user.getUserType().equals("vet")) {
             return "redirect:error";
         }
+
+        model.addAttribute("claims", this_user.getClaims());
         model.addAttribute("requests", this_user.getRequests());
         return "dashboard-vet";
     }
