@@ -4,6 +4,7 @@ package org.launchcode.VetConnect.models;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -38,10 +39,15 @@ public class Clinic extends AbstractEntity{
 
     private String emergency;
 
+    @OneToOne
+    private Claim claim;
+
+    private String claimed;
+
     public Clinic() {}
 
 //    Initialize the id and value fields
-    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, String emergency) {
+    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, String emergency, String claimed) {
         super();
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -51,6 +57,7 @@ public class Clinic extends AbstractEntity{
         this.zip = zip;
         this.website = website;
         this.emergency = emergency;
+        this.claimed = claimed;
     }
 
     //    Getters and Setters
@@ -118,5 +125,21 @@ public class Clinic extends AbstractEntity{
 
     public void setEmergency(String emergency) {
         this.emergency = emergency;
+    }
+
+    public String getClaimed() {
+        return claimed;
+    }
+
+    public void setClaimed(String claimed) {
+        this.claimed = claimed;
+    }
+
+    public Claim getClaim() {
+        return claim;
+    }
+
+    public void setClaim(Claim claim) {
+        this.claim = claim;
     }
 }
