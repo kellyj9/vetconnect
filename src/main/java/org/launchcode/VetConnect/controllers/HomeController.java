@@ -69,12 +69,14 @@ public class HomeController extends VetConnectController {
         if(clinic.isPresent()) {
             List<Review> reviews = clinic.get().getReviews();
 
+
             if(!(reviews.isEmpty())) {
                 DecimalFormat df = new DecimalFormat("#.##");
                 df.setRoundingMode(RoundingMode.CEILING);
 
                 OptionalDouble average = reviews.stream().mapToDouble(a -> a.getReviewRating()).average();
                 model.addAttribute("average", df.format(average.getAsDouble()));
+                model.addAttribute("totalReviews", reviews.size());
 
             }
 
