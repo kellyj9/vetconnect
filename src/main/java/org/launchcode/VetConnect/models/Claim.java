@@ -16,6 +16,8 @@ public class Claim extends AbstractEntity{
     @ManyToOne
     private User user;
 
+    private Boolean approved;
+
     @CreationTimestamp
     private Date createdTimestamp;
 
@@ -24,6 +26,7 @@ public class Claim extends AbstractEntity{
     public Claim(Clinic clinic, User user) {
         this.clinic = clinic;
         this.user = user;
+        this.approved = false;
     }
 
     public Date getCreatedTimestamp() {
@@ -48,5 +51,13 @@ public class Claim extends AbstractEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
     }
 }
