@@ -175,7 +175,7 @@
                 <input class="d-none" id="str5" value="5" type="radio" name="rating" th:field="${review.reviewRating}">
             </div>
 
-            <textarea rows="4" cols="50" class="py-1 px-2" id="reviewText" th:field="${review.reviewText}"type="textarea"></textarea>
+            <textarea rows="4" cols="50" class="py-1 px-2" id="reviewText" placeholder="Type your review here..." th:field="${review.reviewText}"type="textarea"></textarea>
 
             <button class="btn btn-primary mt-3" type="submit">Submit Rating</button>
         </form>
