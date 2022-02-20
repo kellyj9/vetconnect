@@ -1,10 +1,13 @@
 package org.launchcode.VetConnect.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class Review extends AbstractEntity{
@@ -19,6 +22,9 @@ public class Review extends AbstractEntity{
 
     @ManyToOne
     private Clinic clinic;
+
+    @CreationTimestamp
+    private Date createdTimestamp;
 
     public Review() {
     }
@@ -61,5 +67,13 @@ public class Review extends AbstractEntity{
 
     public void setClinic(Clinic clinic) {
         this.clinic = clinic;
+    }
+
+    public Date getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public void setCreatedTimestamp(Date createdTimestamp) {
+        this.createdTimestamp = createdTimestamp;
     }
 }

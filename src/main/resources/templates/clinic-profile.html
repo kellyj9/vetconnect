@@ -55,6 +55,7 @@
           <label class="fa fa-star" th:classappend="${review.reviewRating} >= 3 ? 'checked' : ''"></label>
           <label class="fa fa-star" th:classappend="${review.reviewRating} >= 4 ? 'checked' : ''"></label>
           <label class="fa fa-star" th:classappend="${review.reviewRating} >= 5 ? 'checked' : ''"></label>
+          <p th:text="${#dates.format(review.createdTimestamp, 'MMMM dd, yyyy')}"></p>
         </div>
         <div th:text="${review.reviewText} + ' -' + ${review.user.firstName}"></div>
       </section>
