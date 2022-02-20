@@ -42,12 +42,10 @@ public class Clinic extends AbstractEntity{
     @OneToOne
     private Claim claim;
 
-    private String claimed;
-
     public Clinic() {}
 
 //    Initialize the id and value fields
-    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, String emergency, String claimed) {
+    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, String emergency) {
         super();
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -57,7 +55,6 @@ public class Clinic extends AbstractEntity{
         this.zip = zip;
         this.website = website;
         this.emergency = emergency;
-        this.claimed = claimed;
     }
 
     //    Getters and Setters
@@ -125,14 +122,6 @@ public class Clinic extends AbstractEntity{
 
     public void setEmergency(String emergency) {
         this.emergency = emergency;
-    }
-
-    public String getClaimed() {
-        return claimed;
-    }
-
-    public void setClaimed(String claimed) {
-        this.claimed = claimed;
     }
 
     public Claim getClaim() {
