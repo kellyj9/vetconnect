@@ -217,5 +217,36 @@
         </th:block>
 </div>
 
+<div th:fragment="dashboard-admin-requests" class="container g-6">
+    <th:block th:each="request : ${requests}">
+        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+            <h3 th:text="${request.name}" class="request-heading"></h3>
+            <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+            <table class="table table-sm table-borderless">
+                <tr>
+                    <th class="shrink">Status: </th>
+                    <td class="expand" th:text="${request.status}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Address: </th>
+                    <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Phone Number: </th>
+                    <td class="expand" th:text="${request.phoneNumberToString()}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Website: </th>
+                    <td class="expand" th:text="${request.website}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Emergencies? </th>
+                    <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                </tr>
+            </table>
+        </div>
+    </th:block>
+</div>
+
 </body>
 </html>
