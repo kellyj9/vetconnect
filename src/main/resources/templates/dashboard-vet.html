@@ -2,53 +2,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
+    <nav th:replace="fragments :: nav"></nav>
+    <header><h1>My Dashboard</h1></header>
 
-<nav th:replace="fragments :: nav"></nav>
-<header><h1>My Dashboard</h1></header>
+    <div th:replace="fragments :: add-clinic-instructions"></div>
 
-<div th:replace="fragments :: add-clinic-instructions"></div>
-
-<div th:fragment="claim-clinic-instructions" class="container mb-3">
-    <div class="accordion accordion-flush" id="accordionAddClinic">
-        <div class="accordion-item">
-            <h3 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
-                    <strong>How to claim a clinic</strong>
-                </button>
-            </h3>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddClinic">
-                <div class="accordion-body">
-                    <p>
-                        <strong>Step 1: </strong>Search for the clinic in the VetConnect listing.
-                    </p>
-                    <p>
-                        <strong>Step 2: </strong> Select the "Claim this clinic" button on the top-right of the profile. If the clinic is not in the search results, click the button to <a href="/add-a-clinic">'Add a Clinic'</a> and you will automatically claim it.
-                    </p>
-                    <p>
-                        <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
-                    </p>
+    <div th:fragment="claim-clinic-instructions" class="container mb-3">
+        <div class="accordion accordion-flush" id="accordionAddClinic">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                        <strong>How to claim a clinic</strong>
+                    </button>
+                </h3>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddClinic">
+                    <div class="accordion-body">
+                        <p>
+                            <strong>Step 1: </strong>Search for the clinic in the VetConnect listing.
+                        </p>
+                        <p>
+                            <strong>Step 2: </strong> Select the "Claim this clinic" button on the top-right of the profile. If the clinic is not in the search results, click the button to <a href="/add-a-clinic">'Add a Clinic'</a> and you will automatically claim it.
+                        </p>
+                        <p>
+                            <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<h3>My Clinics</h3>
-<div th:each="clinic : approvedClaims.clinic">
+    <h3>My Clinics</h3>
+    <div th:each="clinic : approvedClaims.clinic">
+        <div th:replace="fragments :: requests"></div>
 
-<div th:replace="fragments :: requests"></div>
-
-<div th:fragment="claims" class="container g-6">
-    <div>
-        <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
-        <th:block th:each="claim : ${claims}">
-            <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
-                <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
-                <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}">
-                </div>
+        <div th:fragment="claims" class="container g-6">
+            <div>
+                <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
+                <th:block th:each="claim : ${claims}">
+                    <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+                        <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
+                        <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+                    </div>
+                </th:block>
             </div>
-
+        </div>
     </div>
-</div>
-</body>
+    </body>
 </html>
