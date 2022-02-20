@@ -34,22 +34,32 @@
   </div>
 
   <section>
-    <div class="d-flex align-items-center">
-      <h3>Reviews</h3>
-      <div th:text="${!(average == null)} ? 'Average rating ' + ${average} : ''"></div>
+    <div class="d-flex align-items-center mt-2">
+      <h3 class="mb-0">Reviews</h3>
+      <div th:if="${!(average == null)}"class="mx-2 d-flex align-items-center">
+        <label class="fa fa-star fa-2x checked" ></label>
+        <label class="fa fa-star fa-2x" th:classappend="${average} >= 2 ? 'checked' : ''"></label>
+        <label class="fa fa-star fa-2x" th:classappend="${average} >= 3 ? 'checked' : ''"></label>
+        <label class="fa fa-star fa-2x" th:classappend="${average} >= 4 ? 'checked' : ''"></label>
+        <label class="fa fa-star fa-2x" th:classappend="${average} >= 5 ? 'checked' : ''"></label>
+      </div>
+      <div class="mx-2" th:text="${!(average == null)} ? '(' + ${average} + ') from ' + ${totalReviews} + ' review(s)' : 'No Reviews Yet'"></div>
     </div>
     <div th:if="${!session.isEmpty()} and ${!(review == null)}"><div th:replace="fragments :: add-review"></div></div>
     <div th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
-
-      <table>
-        <th:block th:each="review : ${clinic.getReviews()}">
-          <tr height="40px">
-            <td style="text-align: left" width="75%" height="75%" th:text="${review.reviewRating}"></td>
-            <td th:text="${review.reviewText}"></td>
-          </tr>
-        </th:block>
-      </table>
-  </section>
+    <div class="d-flex justify-content-start mt-3" th:each="review : ${clinic.getReviews()}">
+      <section class="d-flex justify-content-start flex-column py-3">
+        <div class="d-flex justify-content-start">
+          <label class="fa fa-star checked" ></label>
+          <label class="fa fa-star" th:classappend="${review.reviewRating} >= 2 ? 'checked' : ''"></label>
+          <label class="fa fa-star" th:classappend="${review.reviewRating} >= 3 ? 'checked' : ''"></label>
+          <label class="fa fa-star" th:classappend="${review.reviewRating} >= 4 ? 'checked' : ''"></label>
+          <label class="fa fa-star" th:classappend="${review.reviewRating} >= 5 ? 'checked' : ''"></label>
+        </div>
+        <div th:text="${review.reviewText} + ' -' + ${review.user.firstName}"></div>
+      </section>
+    </div>
+</section>
 
 </div>
 </body>
