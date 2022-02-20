@@ -74,7 +74,7 @@ public class DashboardController extends VetConnectController{
     }
 
     @GetMapping(value="dashboard-admin/page/{pageNo}")
-    public String displayDashboardVet(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String viewType, @RequestParam(required = false) String filter) {
+    public String displayDashboardAdmin(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String viewType, @RequestParam(required = false) String filter) {
 
         User this_user = getUserFromSession(request.getSession(false));
         if (!this_user.getUserType().equals("admin")) {
