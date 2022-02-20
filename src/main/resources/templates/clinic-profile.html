@@ -10,7 +10,12 @@
 </header>
 
 <div class="cprofile p-4 m-auto position-relative d-flex">
-  <div class="position-absolute top-0 end-0 m-2 claimedTag"  >
+  <div class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
+    <div th:text="${!(clinic.claim == null)} ? 'Claimed' : '' "></div>
+    <div class="claimedTagContent">This tag indicates the vet that operates this practice has verified this information and claimed this clinic.</div>
+  </div>
+
+  <div class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
     <div th:text="${!(clinic.claim == null)} ? 'Claimed' : '' "></div>
     <div class="claimedTagContent">This tag indicates the vet that operates this practice has verified this information and claimed this clinic.</div>
   </div>

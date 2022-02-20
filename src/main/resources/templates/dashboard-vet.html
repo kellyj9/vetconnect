@@ -34,6 +34,8 @@
 
     <h3>My Clinics</h3>
     <div th:each="clinic : approvedClaims.clinic">
+
+    </div>
         <div th:replace="fragments :: requests"></div>
 
         <div th:fragment="claims" class="container g-6">
