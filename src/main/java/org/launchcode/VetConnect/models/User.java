@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class User extends AbstractEntity {
@@ -51,6 +52,10 @@ public class User extends AbstractEntity {
 
     public List<Claim> getClaims() {
         return claims;
+    }
+
+    public List<Claim> getApprovedClaims() {
+        return claims.stream().filter(claim -> claim.getApproved() == true).collect(Collectors.toList());
     }
 
     public List<Request> getRequests() {

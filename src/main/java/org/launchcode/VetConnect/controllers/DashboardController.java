@@ -1,5 +1,6 @@
 package org.launchcode.VetConnect.controllers;
 
+import org.launchcode.VetConnect.models.Claim;
 import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.User;
 import org.launchcode.VetConnect.models.data.ClaimRepository;
@@ -65,6 +66,7 @@ public class DashboardController extends VetConnectController{
             return "redirect:error";
         }
 
+        model.addAttribute("approvedClaims", this_user.getApprovedClaims());
         model.addAttribute("claims", this_user.getClaims());
         model.addAttribute("requests", this_user.getRequests());
         return "dashboard-vet";
