@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ClaimRepository extends CrudRepository<Claim, Long> {
 
-    List<Claim> findByUserIdAndApproved(Long user_id, Boolean approved);
+    List<Claim> findByUserIdAndStatus(Long user_id, String status);
 }
