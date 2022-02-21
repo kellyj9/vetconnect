@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class DashboardController extends VetConnectController{
@@ -66,7 +67,7 @@ public class DashboardController extends VetConnectController{
             return "redirect:error";
         }
 
-        model.addAttribute("approvedClaims", this_user.getApprovedClaims());
+        model.addAttribute("approvedClaims", this_user.getClaims().stream().filter(claim -> claim.getStatus().equals("approved")).collect(Collectors.toList()));
         model.addAttribute("claims", this_user.getClaims());
         model.addAttribute("requests", this_user.getRequests());
         return "dashboard-vet";
