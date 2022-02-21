@@ -4,9 +4,8 @@
 <body>
 
 <nav th:replace="fragments :: nav-top"></nav>
-<div th:replace="fragments :: add-clinic-instructions"></div>
 <header><h1>My Dashboard</h1></header>
-
+    <div th:replace="fragments :: add-clinic-instructions"></div>
     <div th:fragment="claim-clinic-instructions" class="container mb-3">
         <div class="accordion accordion-flush" id="accordionAddClinic">
             <div class="accordion-item">
@@ -38,7 +37,7 @@
             <p th:if="${approvedClaims.isEmpty()}">No claims have been approved yet!</p>
                 <th:block th:each="claim : ${approvedClaims}">
                     <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative">
-                        <h3 th:text="${claim.clinic.name}"></h3>
+                        <a th:href="@{/clinic-profile(clinicId=${claim.clinic.id})}"><h3 th:text="${claim.clinic.name}"></h3></a>
                         <table class="table table-sm table-borderless">
                             <tr>
                                 <th class="shrink">Address: </th>
@@ -70,7 +69,7 @@
                     <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
                     <th:block th:each="claim : ${claims}">
                         <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
-                            <h5 th:text="${claim.clinic.name}" class="request-heading"></h5>
+                            <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
                             <div>
                                 <p th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></p>
                             </div>

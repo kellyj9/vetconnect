@@ -4,6 +4,7 @@ import org.launchcode.VetConnect.models.Claim;
 import org.launchcode.VetConnect.models.Clinic;
 import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.User;
+import org.launchcode.VetConnect.models.data.ClaimRepository;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
 
 import org.launchcode.VetConnect.models.data.RequestRepository;
