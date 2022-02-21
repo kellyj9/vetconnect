@@ -35,14 +35,34 @@
     <div class="container">
         <div>
             <h3>My Claimed Clinics</h3>
-            <div th:each="clinic : approvedClaims.clinic">
-                <p th:if="${approvedClaims.isEmpty()}">No claims have been approved yet!</p>
+            <p th:if="${approvedClaims.isEmpty()}">No claims have been approved yet!</p>
+                <th:block th:each="claim : ${approvedClaims}">
+                    <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative">
+                        <h3 th:text="${claim.clinic.name}"></h3>
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <th class="shrink">Address: </th>
+                                <td class="expand" th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></td>
+                            </tr>
+                            <tr>
+                                <th class="shrink">Phone Number: </th>
+                                <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
+                            </tr>
+                            <tr>
+                                <th class="shrink">Website: </th>
+                                <td class="expand" th:text="${claim.clinic.website}"></td>
+                            </tr>
+                            <tr>
+                                <th class="shrink">Emergencies? </th>
+                                <td class="expand" th:text="${claim.clinic.emergency} == '1' ? 'Yes' : 'No'"></td>
+                            </tr>
+                        </table>
+                        <div class="position-absolute top-0 end-0 my-2 mx-3" >
+                            <a class="btn btn-primary" href=""><p class="mb-0 text-end">Edit clinic details</p></a>
+                        </div>
+                    </div>
+                </th:block>
 
-
-            </div>
-            <h3>My New Clinic Requests</h3>
-            <div th:replace="fragments :: requests"></div>
-            <p th:if="${requests.isEmpty()}">No requests have been made yet!</p>
 
             <h3>My Claim a Clinic Requests</h3>
             <div th:fragment="claims" class="container g-6">
@@ -50,12 +70,24 @@
                     <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
                     <th:block th:each="claim : ${claims}">
                         <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
-                            <h4 th:text="${claim.clinic.name}" class="request-heading"></h4>
-                            <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+                            <h5 th:text="${claim.clinic.name}" class="request-heading"></h5>
+                            <div>
+                                <p th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></p>
+                            </div>
+                            <div class="position-absolute top-0 end-0 my-2 mx-3" >
+                                <p class="mb-0 text-end" th:text="'Date Created: ' + ${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></p>
+                                <p class="mb-0 text-end" th:text="'Status: ' + ${claim.status.substring(0, 1).toUpperCase() + claim.status.substring(1)}"></p>
+                            </div>
                         </div>
                     </th:block>
                 </div>
             </div>
+
+
+            <h3>My New Clinic Requests</h3>
+            <div th:replace="fragments :: requests"></div>
+            <p th:if="${requests.isEmpty()}">No requests have been made yet!</p>
+
         </div>
     </div>
 
