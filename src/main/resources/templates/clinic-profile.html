@@ -9,18 +9,15 @@
     <h1>Clinic Profile</h1>
 </header>
 
-<div class="cprofile p-4 m-auto position-relative d-flex">
+<div class="cprofile p-4 m-auto position-relative d-flex flex-wrap">
   <div class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
-    <div th:text="${!(clinic.claim == null)} ? 'Claimed' : '' "></div>
+    <div class="bg-success text-white font-weight-bold rounded px-3 py-1" th:text="${!(clinic.claim == null) and (clinic.claim.status == 'approved')} ? 'Claimed' : '' "></div>
     <div class="claimedTagContent">This tag indicates the vet that operates this practice has verified this information and claimed this clinic.</div>
   </div>
 
-  <div  class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
-    <a th:href="@{/claim-request(clinicId=${clinic.id})}"><div th:text="${userType == 'vet'} and ${clinic.claim == null} ? 'Claim this clinic' : '' "></div></a>
+  <div th:if="${userType == 'vet'} and ${clinic.claim == null}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}">
+    <a class="btn btn-primary" th:href="@{/claim-request(clinicId=${clinic.id})}">Claim this clinic</a>
   </div>
-
-
-
 
   <section class="m-auto">
     <div class="d-flex flex-column m-auto p-2">
