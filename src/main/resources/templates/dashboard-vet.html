@@ -32,23 +32,32 @@
         </div>
     </div>
 
-    <h3>My Clinics</h3>
-    <div th:each="clinic : approvedClaims.clinic">
+    <div class="container">
+        <div>
+            <h3>My Claimed Clinics</h3>
+            <div th:each="clinic : approvedClaims.clinic">
+                <p th:if="${approvedClaims.isEmpty()}">No claims have been approved yet!</p>
 
-    </div>
-        <div th:replace="fragments :: requests"></div>
 
-        <div th:fragment="claims" class="container g-6">
-            <div>
-                <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
-                <th:block th:each="claim : ${claims}">
-                    <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
-                        <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
-                        <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}"></div>
-                    </div>
-                </th:block>
+            </div>
+            <h3>My New Clinic Requests</h3>
+            <div th:replace="fragments :: requests"></div>
+            <p th:if="${requests.isEmpty()}">No requests have been made yet!</p>
+
+            <h3>My Claim a Clinic Requests</h3>
+            <div th:fragment="claims" class="container g-6">
+                <div>
+                    <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
+                    <th:block th:each="claim : ${claims}">
+                        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
+                            <h4 th:text="${claim.clinic.name}" class="request-heading"></h4>
+                            <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="'Date Created: ' + ${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+                        </div>
+                    </th:block>
+                </div>
             </div>
         </div>
     </div>
+
     </body>
 </html>
