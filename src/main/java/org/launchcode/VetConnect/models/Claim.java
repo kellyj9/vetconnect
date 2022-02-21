@@ -16,7 +16,7 @@ public class Claim extends AbstractEntity{
     @ManyToOne
     private User user;
 
-    private String status;
+    private String status = "pending";
 
     @CreationTimestamp
     private Date createdTimestamp;
@@ -26,7 +26,6 @@ public class Claim extends AbstractEntity{
     public Claim(Clinic clinic, User user) {
         this.clinic = clinic;
         this.user = user;
-        this.status = "pending";
     }
 
     public Date getCreatedTimestamp() {
