@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
-    <nav th:replace="fragments :: nav"></nav>
-    <header><h1>My Dashboard</h1></header>
 
-    <div th:replace="fragments :: add-clinic-instructions"></div>
+<nav th:replace="fragments :: nav-top"></nav>
+<div th:replace="fragments :: add-clinic-instructions"></div>
+<header><h1>My Dashboard</h1></header>
 
     <div th:fragment="claim-clinic-instructions" class="container mb-3">
         <div class="accordion accordion-flush" id="accordionAddClinic">

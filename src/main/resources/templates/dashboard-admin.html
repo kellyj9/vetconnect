@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+
+<nav th:replace="fragments :: nav-top"></nav>
+<header><h1>My Dashboard</h1></header>
+
+<div th:replace="fragments :: dashboard-admin-form"></div>
+<div class="container">
+    <p th:if="${viewType} == 'requests'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to ' + '\'Add a Clinic\' : ' + ${totalItems} + ' total'"></p>
+    <!-- For later
+    <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to ' + '\'Claim a Clinic\' : ' + ${totalItems} + ' total'"></p>
+    -->
+    <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="'TESTING ONLY: ' + ${#strings.toUpperCase(filter)} + ' requests to ' + '\'Claim a Clinic\''"></p>
+</div>
+
+<div th:replace="fragments :: dashboard-admin-pagination"></div>
+<div th:if="${viewType} == 'requests'" th:replace="fragments :: dashboard-admin-requests"></div>
+<!-- if statement for claims should go here -->
+<div th:replace="fragments :: dashboard-admin-pagination"></div>
+
+
+</body>
+</html>

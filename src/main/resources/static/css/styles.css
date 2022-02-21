@@ -41,6 +41,10 @@ table td.expand {
     padding: 0px;
 }
 
+.nav-pagination {
+    background-color: #cae4fd;
+}
+
 .div-search {
     max-width: 485px;
     margin: 0 auto;
