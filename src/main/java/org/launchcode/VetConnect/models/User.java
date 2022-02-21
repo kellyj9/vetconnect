@@ -53,11 +53,7 @@ public class User extends AbstractEntity {
     public List<Claim> getClaims() {
         return claims;
     }
-
-    public List<Claim> getApprovedClaims() {
-        return claims.stream().filter(claim -> claim.getStatus() == "approved").collect(Collectors.toList());
-    }
-
+    
     public List<Request> getRequests() {
         return requests;
     }
