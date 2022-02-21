@@ -56,6 +56,9 @@ public class HomeController extends VetConnectController {
     {
         User user = getUserFromSession(request.getSession(false));
 
+        if(!(user == null)) {
+            model.addAttribute("userType", user.getUserType());
+        }
         model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
         return "clinic-profile";
     }
