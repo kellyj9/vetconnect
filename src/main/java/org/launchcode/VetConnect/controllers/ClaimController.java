@@ -31,6 +31,7 @@ public class ClaimController extends VetConnectController{
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
 
         Claim newClaim = new Claim(clinic.get(), user);
+        clinic.get().setClaim(newClaim);
 
         claimRepository.save(newClaim);
 
