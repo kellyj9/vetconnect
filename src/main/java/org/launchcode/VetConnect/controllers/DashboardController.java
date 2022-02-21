@@ -1,7 +1,9 @@
 package org.launchcode.VetConnect.controllers;
 
+import org.launchcode.VetConnect.models.Clinic;
 import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.User;
+import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.launchcode.VetConnect.models.data.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,19 +11,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class DashboardController extends VetConnectController{
 
     @Autowired
     RequestRepository requestRepository;
+
+    @Autowired
+    ClinicRepository clinicRepository;
 
     @GetMapping(value="dashboard")
     public String getDashboard(Model model, HttpServletRequest request) {
@@ -125,6 +129,52 @@ public class DashboardController extends VetConnectController{
         model.addAttribute("filter", filter);
 
         return "dashboard-admin";
+    }
+
+    @PostMapping("admin-request-approve")
+    public String processApproveClinicAddRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long requestId) {
+        User this_user = getUserFromSession(request.getSession(false));
+        if (!this_user.getUserType().equals("admin")) {
+            return "redirect:error";
+        }
+
+        // make sure the requestId in the url corresponds with an existing record
+        Optional<Request> optionalRequest = requestRepository.findById(requestId);
+        if (optionalRequest.isPresent()) {
+            Request requestTmp = optionalRequest.get();
+            requestTmp.setStatus("Approved");
+            requestRepository.save(requestTmp);
+
+            Clinic newClinic = new Clinic(requestTmp.getName(), requestTmp.getPhoneNumber(), requestTmp.getAddress(), requestTmp.getCity(), requestTmp.getState(), requestTmp.getZip(), requestTmp.getWebsite(), requestTmp.getEmergency());
+            clinicRepository.save(newClinic);
+        }
+        else {
+            return "redirect:error";
+        }
+        return "redirect:dashboard-admin/page/1?viewType=requests&filter=" + filter;
+    }
+
+
+
+    @PostMapping("admin-request-decline")
+    public String processDeclineClinicAddRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long requestId) {
+        User this_user = getUserFromSession(request.getSession(false));
+        if (!this_user.getUserType().equals("admin")) {
+            return "redirect:error";
+        }
+       // return "index"; // test
+
+        // make sure the requestId in the url corresponds with an existing record
+        Optional<Request> optionalRequest = requestRepository.findById(requestId);
+        if (optionalRequest.isPresent()) {
+            Request requestTmp = optionalRequest.get();
+            requestTmp.setStatus("Declined");
+            requestRepository.save(requestTmp);
+        }
+        else {
+            return "redirect:error";
+        }
+        return "redirect:dashboard-admin/page/1?viewType=requests&filter=" + filter;
     }
 
 
