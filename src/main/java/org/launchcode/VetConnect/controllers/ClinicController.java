@@ -65,6 +65,9 @@ public class ClinicController extends VetConnectController {
         newRequest.setStatus("Pending");
         newRequest.setPhoneNumber(newRequest.getPhoneNumber().replaceAll("[^0-9]",""));
 
+
+        newRequest.setWebsite(newRequest.getWebsite().replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)",""));
+
         requestRepository.save(newRequest);
 
         return "redirect:dashboard";
