@@ -69,7 +69,14 @@ table td.expand {
    padding: 10px;
    border-radius: 10px;
    margin: auto;
-   max-width: 90%;
+   max-width: 60%;
+}
+
+.clinicLabel {
+    margin-bottom: 0;
+    font-style: italic;
+    color: rgb(149, 165, 166);
+
 }
 
 .user-type:hover {

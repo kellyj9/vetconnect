@@ -6,23 +6,22 @@
 <nav th:replace="fragments :: nav"></nav>
 
 <header >
-    <h1>Clinic Profile</h1>
 </header>
 
 <div class="cprofile row p-4 m-auto position-relative ">
   <div class="col-sm d-flex-row m-auto p-2">
-    <h2>Clinic Name</h2>
-    <p th:text="${clinic.name}"></p>
-    <h2>Address</h2>
+    <p class="clinicLabel">Clinic Name</p>
+    <h2 class="display-5" th:text="${clinic.name}"></h2>
+    <p class="clinicLabel">Address</p>
       <div>
-        <p class="mb-1" th:text="${clinic.address}"></p>
-        <p th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></p>
+        <p class="mb-1 fs-6" th:text="${clinic.address}"></p>
+        <p class="fs-6" th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></p>
       </div>
-    <h2>Phone Number</h2>
-    <p th:text="${clinic.phoneNumberToString()}"></p>
-    <h2>Website</h2>
+    <p class="clinicLabel">Phone Number</p>
+    <p class="fs-6" th:text="${clinic.phoneNumberToString()}"></p>
+    <p class="clinicLabel">Website</p>
     <a th:href="@{${clinic.website}}">
-      <p th:text="${clinic.website}"></p>
+      <p class="fs-6" th:text="${clinic.website}"></p>
     </a>
   </div>
   <div class="col-sm">
@@ -46,10 +45,10 @@
       <div class="mx-2" th:text="${!(average == null)} ? '(' + ${average} + ') from ' + ${totalReviews} + ' review(s)' : ''"></div>
     </div>
     <div th:if="${!session.isEmpty()} and ${!(review == null)}"><div th:replace="fragments :: add-review"></div></div>
-    <div th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
+    <div  class="fst-italic" th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
 
     <div class="d-flex justify-content-start mt-3 text-start" th:each="review : ${clinic.getReviews()}">
-      <section class="d-flex justify-content-start flex-column py-3">
+      <section class="d-flex justify-content-start flex-column py-2">
         <p class="mb-0 fw-bold " th:text="${review.user.firstName}"></p>
         <div class="d-flex justify-content-start align-items-center ">
           <label class="fa fa-star checked" ></label>
@@ -59,7 +58,7 @@
           <label class="fa fa-star" th:classappend="${review.reviewRating} >= 5 ? 'checked' : ''"></label>
           <p class="mb-0 mx-1" th:text="${#dates.format(review.createdTimestamp, 'MMMM dd, yyyy')}"></p>
         </div>
-        <div class="font-italic" th:text="${'&quot' + review.reviewText + '&quot'}"></div>
+        <div class="font-italic" th:if=${!review.reviewText.isEmpty()} th:text="${'&quot' + review.reviewText + '&quot'}"></div>
       </section>
     </div>
 </section>

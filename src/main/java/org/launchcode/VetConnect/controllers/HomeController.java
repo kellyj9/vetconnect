@@ -95,8 +95,11 @@ public class HomeController extends VetConnectController {
     }
 
     @PostMapping("clinic-profile")
-    public String addAReviewRequest(@ModelAttribute @Valid Review newReview, @RequestParam Long clinicId, Model model, Errors errors, HttpServletRequest request) {
+    public String addAReviewRequest(@RequestParam Long clinicId, @ModelAttribute @Valid Review newReview, Errors errors,  HttpServletRequest request, Model model) {
         if(errors.hasErrors()) {
+            Optional<Clinic> clinic = clinicRepository.findById(clinicId);
+
+            model.addAttribute("clinic", clinic.get());
             return "clinic-profile";
         }
 

@@ -12,9 +12,10 @@ import java.util.Date;
 @Entity
 public class Review extends AbstractEntity{
 
+
     private String reviewText;
 
-    @NotNull
+    @NotNull(message = "Please select a review rating")
     private Integer reviewRating;
 
     @ManyToOne
