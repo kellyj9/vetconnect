@@ -13,6 +13,10 @@ public class VetConnectController {
     UserRepository userRepository;
 
     public User getUserFromSession(HttpSession session) {
+        if(session == null) {
+            return null;
+        }
+
         Long userId = (Long) session.getAttribute("user");
         if (userId == null) {
             return null;

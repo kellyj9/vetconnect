@@ -100,3 +100,29 @@ table td.expand {
 a {
     text-decoration: none;
 }
+
+.claimedTag {
+  display: inline-block;
+   position: relative;
+   background-color: red;
+   color: white;
+   padding: .25em .5em;
+   font-weight: bold;
+   border-radius: 5px;
+}
+
+.claimedTagContent {
+    width: 150px;
+    left: -50%;
+    padding: 1em;
+    color: black;
+    display: none;
+    z-index: 1;
+    position: absolute;
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    overflow-wrap: break-word;
+    font-weight: normal;
+}
+
+.claimedTag:hover .claimedTagContent { display: block; }

@@ -43,6 +43,8 @@ public class Request extends AbstractEntity {
 
     private String status;
 
+    private String claimed;
+
     @OneToOne
     private Clinic clinic;
 
@@ -54,7 +56,7 @@ public class Request extends AbstractEntity {
 
     public Request() {};
 
-    public Request(String name, String address, String city, String state, String zip, String phoneNumber, String website, String emergency, String status, User user) {
+    public Request(String name, String address, String city, String state, String zip, String phoneNumber, String website, String emergency, String status, User user, String claimed) {
         this.name = name;
         this.address = address;
         this.city = city;
@@ -65,6 +67,7 @@ public class Request extends AbstractEntity {
         this.emergency = emergency;
         this.status = status;
         this.user = user;
+        this.claimed = claimed;
     }
 
     public User getUser() {
@@ -163,5 +166,13 @@ public class Request extends AbstractEntity {
 
     public void setCreatedTimestamp(Date createdTimestamp) {
         this.createdTimestamp = createdTimestamp;
+    }
+
+    public String getClaimed() {
+        return claimed;
+    }
+
+    public void setClaimed(String claimed) {
+        this.claimed = claimed;
     }
 }

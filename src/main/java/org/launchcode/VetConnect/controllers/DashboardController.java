@@ -1,9 +1,12 @@
 package org.launchcode.VetConnect.controllers;
 
+import org.launchcode.VetConnect.models.Claim;
 import org.launchcode.VetConnect.models.Clinic;
 import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.User;
+import org.launchcode.VetConnect.models.data.ClaimRepository;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
+
 import org.launchcode.VetConnect.models.data.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +29,9 @@ public class DashboardController extends VetConnectController{
     RequestRepository requestRepository;
 
     @Autowired
+    ClaimRepository claimRepository;
+   
+   @Autowired
     ClinicRepository clinicRepository;
 
     @GetMapping(value="dashboard")
@@ -73,6 +80,9 @@ public class DashboardController extends VetConnectController{
         if (!this_user.getUserType().equals("vet")) {
             return "redirect:error";
         }
+
+        model.addAttribute("approvedClaims", this_user.getClaims().stream().filter(claim -> claim.getStatus().equals("approved")).collect(Collectors.toList()));
+        model.addAttribute("claims", this_user.getClaims());
         model.addAttribute("requests", this_user.getRequests());
         return "dashboard-vet";
     }

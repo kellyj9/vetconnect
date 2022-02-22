@@ -2,6 +2,7 @@ package org.launchcode.VetConnect.controllers;
 
 
 import org.launchcode.VetConnect.models.ClinicData;
+import org.launchcode.VetConnect.models.User;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.launchcode.VetConnect.models.Clinic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +52,13 @@ public class HomeController extends VetConnectController {
     }
 
     @GetMapping("clinic-profile")
-    public String displayClinicProfile(@RequestParam Long clinicId, Model model)
+    public String displayClinicProfile(@RequestParam Long clinicId, Model model, HttpServletRequest request)
     {
+        User user = getUserFromSession(request.getSession(false));
+
+        if(!(user == null)) {
+            model.addAttribute("userType", user.getUserType());
+        }
         model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
         return "clinic-profile";
     }
