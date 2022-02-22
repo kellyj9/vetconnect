@@ -60,7 +60,7 @@
                             </tr>
                         </table>
                         <div class="position-absolute top-0 end-0 my-2 mx-3" >
-                            <a class="btn btn-primary" href=""><p class="mb-0 text-end">Edit clinic details</p></a>
+                            <a class="btn btn-primary" th:href="@{/edit-a-clinic(clinicId=${claim.clinic.id})}"><p class="mb-0 text-end">Edit clinic details</p></a>
                         </div>
                     </div>
                 </th:block>
