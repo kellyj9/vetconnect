@@ -158,7 +158,7 @@
     </div>
 </div>
 
-<div th:fragment="add-review">
+<div th:fragment="add-review" class="mt-4">
         <form class="position-relative d-flex flex-column" method="POST">
             <div class="rating d-flex align-items-center my-2 position-relative">
                 <label for="str1" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
@@ -174,8 +174,10 @@
                 <input class="d-none" id="str4" value="4" type="radio" name="rating" th:field="${review.reviewRating}">
                 <input class="d-none" id="str5" value="5" type="radio" name="rating" th:field="${review.reviewRating}">
             </div>
+            <p th:errors="${review.reviewRating}" class="alert alert-danger"></p>
 
-            <textarea rows="4" cols="50" class="py-1 px-2" id="reviewText" placeholder="Type your review here..." th:field="${review.reviewText}"type="textarea"></textarea>
+            <textarea rows="4" cols="50" class="py-1 px-2" id="reviewText" placeholder="Type your review here..." th:field="${review.reviewText}" type="textarea"></textarea>
+            <p th:errors="${review.reviewText}" class="alert alert-danger"></p>
 
             <button class="btn btn-primary mt-3" type="submit">Submit Rating</button>
         </form>
