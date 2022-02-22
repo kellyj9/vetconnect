@@ -7,19 +7,46 @@
 <header><h1>My Dashboard</h1></header>
 
 <div th:replace="fragments :: dashboard-admin-form"></div>
+
 <div class="container">
     <p th:if="${viewType} == 'requests'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to ' + '\'Add a Clinic\' : ' + ${totalItems} + ' total'"></p>
-    <!-- For later
     <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to ' + '\'Claim a Clinic\' : ' + ${totalItems} + ' total'"></p>
-    -->
-    <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="'TESTING ONLY: ' + ${#strings.toUpperCase(filter)} + ' requests to ' + '\'Claim a Clinic\''"></p>
 </div>
 
 <div th:replace="fragments :: dashboard-admin-pagination"></div>
-<div th:if="${viewType} == 'requests'" th:replace="fragments :: dashboard-admin-requests"></div>
-<!-- if statement for claims should go here -->
-<div th:replace="fragments :: dashboard-admin-pagination"></div>
 
+<div th:if="${viewType} == 'requests'" th:replace="fragments :: dashboard-admin-requests"></div>
+
+<div th:if="${viewType} == 'claims'" class="container g-6">
+    <th:block th:each="claim : ${claims}">
+        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
+            <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
+            <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+            <table class="table table-sm table-borderless">
+                <tr>
+                    <th class="shrink">Status: </th>
+                    <td class="expand" th:text="${#strings.capitalize(claim.status)}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Claim requested by: </th>
+                    <td class="expand" th:text="${claim.user.firstName} + ' ' + ${claim.user.lastName}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Clinic Address: </th>
+                    <td class="expand" th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Clinic Phone Number: </th>
+                    <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
+                </tr>
+                <tr>
+                </tr>
+            </table>
+        </div>
+    </th:block>
+</div>
+
+<div th:replace="fragments :: dashboard-admin-pagination"></div>
 
 </body>
 </html>
