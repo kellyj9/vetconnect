@@ -119,21 +119,20 @@ public class DashboardController extends VetConnectController{
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("totalItems", page.getTotalElements());
         }
-        //FOR LATER:
-//        else {
-//            List<Claim> claims;
-//            Page<Claim> page;
-//            if (filter.equals("all")) {
-//                page =  claimRepository.findAll(pageable);
-//            } else {
-//                page = claimRepository.findAllByStatus(filter, pageable);
-//            }
-//            claim = page.getContent();
-//            model.addAttribute("claims", claims);
-//            model.addAttribute("currentPage", pageNo);
-//            model.addAttribute("totalPages", page.getTotalPages());
-//            model.addAttribute("totalItems", page.getTotalElements());
-//        }
+      else if (viewType.equals("claims")) {
+            List<Claim> claims;
+            Page<Claim> page;
+            if (filter.equals("all")) {
+                page = (Page<Claim>) claimRepository.findAll(pageable);
+            } else {
+                page = claimRepository.findAllByStatus(filter, pageable);
+            }
+            claims = page.getContent();
+            model.addAttribute("claims", claims);
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("totalItems", page.getTotalElements());
+        }
 
         model.addAttribute("viewType", viewType);
         model.addAttribute("filter", filter);
