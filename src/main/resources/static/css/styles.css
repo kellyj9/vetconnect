@@ -132,3 +132,6 @@ a {
     cursor: pointer;
 
 }
+.fa-location-arrow:hover {
+    opacity: .75;
+}
