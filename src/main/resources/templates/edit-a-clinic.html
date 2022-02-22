@@ -11,7 +11,7 @@
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5">
                         <form method="POST">
-                            <h3 class="mb-4 text-center">Add a clinic</h3>
+                            <h3 class="mb-4 text-center" th:text="'Edit ' + ${clinic.name}"></h3>
                             <div class="form-outline mb-4">
                                 <label class="form-label" th:for="name">Clinic Name</label>
                                 <input  th:field=${clinic.name} type="text" id="name" class="form-control form-control-lg mb-1" />
