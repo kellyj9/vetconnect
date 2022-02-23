@@ -23,8 +23,6 @@ public class ClaimController extends VetConnectController{
     @Autowired
     ClinicRepository clinicRepository;
 
-
-
     @GetMapping(value = "claim-request")
     public String processClaimRequest(@RequestParam Long clinicId, HttpServletRequest request) {
         User user = getUserFromSession(request.getSession(false));
@@ -35,8 +33,6 @@ public class ClaimController extends VetConnectController{
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
 
         Claim newClaim = new Claim(clinic.get(), user);
-        clinic.get().setClaim(newClaim);
-
         claimRepository.save(newClaim);
 
         return "redirect:dashboard-vet";

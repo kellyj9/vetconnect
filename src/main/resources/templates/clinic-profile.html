@@ -6,14 +6,15 @@
 <header >
 </header>
 
+
 <div class="cprofile m-auto position-relative d-flex flex-column">
   <section class="d-flex flex-wrap align-items-center justify-content-around p-2">
-    <div th:if="${!(clinic.claim == null) and (clinic.claim.status == 'approved')}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
+    <div th:if="${!(claim == null) and (claim.status == 'approved')}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
       <div class="bg-success text-white font-weight-bold rounded px-3 py-1" >Claimed</div>
       <div class="claimedTagContent">This tag indicates the vet that operates this practice has verified this information and claimed this clinic.</div>
     </div>
 
-    <div th:if="${userType == 'vet'} and ${clinic.claim == null}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}">
+    <div th:if="${userType == 'vet'} and ${claim == null}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}">
       <a class="btn btn-primary" th:href="@{/claim-request(clinicId=${clinic.id})}">Claim this clinic</a>
     </div>
 
@@ -39,10 +40,6 @@
         </a>
     </section>
   </section>
-
-
-
-
 
     <section class="d-flex flex-column align-items-start mx-3 mt-2 py-1">
       <div class="d-flex align-items-center mt-2 py-1">

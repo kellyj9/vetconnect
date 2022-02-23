@@ -1,9 +1,11 @@
 package org.launchcode.VetConnect.controllers;
 
 
+import org.launchcode.VetConnect.models.Claim;
 import org.launchcode.VetConnect.models.ClinicData;
 import org.launchcode.VetConnect.models.Review;
 import org.launchcode.VetConnect.models.User;
+import org.launchcode.VetConnect.models.data.ClaimRepository;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.launchcode.VetConnect.models.Clinic;
 import org.launchcode.VetConnect.models.data.ReviewRepository;
@@ -23,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HomeController extends VetConnectController {
@@ -30,6 +33,9 @@ public class HomeController extends VetConnectController {
     @Autowired
     private ClinicRepository clinicRepository;
 
+    @Autowired
+    private ClaimRepository claimRepository;
+  
     @Autowired
     private ReviewRepository reviewRepository;
 
@@ -67,6 +73,8 @@ public class HomeController extends VetConnectController {
     {
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
         User user = getUserFromSession(request.getSession(false));
+        Claim claim = claimRepository.findByClinicId(clinicId);
+
 
         if(clinic.isPresent()) {
             List<Review> reviews = clinic.get().getReviews();
@@ -93,6 +101,10 @@ public class HomeController extends VetConnectController {
 
             model.addAttribute("clinic", clinic.get());
         }
+
+        model.addAttribute("claim", claim);
+        model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
+
         return "clinic-profile";
     }
 

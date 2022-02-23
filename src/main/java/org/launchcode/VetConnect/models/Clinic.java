@@ -45,10 +45,7 @@ public class Clinic extends AbstractEntity{
 
     @OneToMany(mappedBy = "clinic")
     private final List<Review> reviews = new ArrayList<>();
-
-    @OneToOne
-    private Claim claim;
-
+  
     public Clinic() {}
 
 //    Initialize the id and value fields
@@ -134,11 +131,5 @@ public class Clinic extends AbstractEntity{
     public List<Review> getReviews() {
         return reviews;
     }
-    public Claim getClaim() {
-        return claim;
-    }
 
-    public void setClaim(Claim claim) {
-        this.claim = claim;
-    }
 }
