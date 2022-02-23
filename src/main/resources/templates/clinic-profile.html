@@ -7,9 +7,7 @@
 </header>
 
 <div class="cprofile m-auto position-relative d-flex flex-column">
-
-
-  <section class="d-flex flex-wrap align-items-center justify-content-center m-auto p-2">
+  <section class="d-flex flex-wrap align-items-center justify-content-around p-2">
     <div th:if="${!(clinic.claim == null) and (clinic.claim.status == 'approved')}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
       <div class="bg-success text-white font-weight-bold rounded px-3 py-1" >Claimed</div>
       <div class="claimedTagContent">This tag indicates the vet that operates this practice has verified this information and claimed this clinic.</div>
@@ -19,7 +17,7 @@
       <a class="btn btn-primary" th:href="@{/claim-request(clinicId=${clinic.id})}">Claim this clinic</a>
     </div>
 
-    <section class="d-flex flex-column align-items-center justify-content-center">
+    <section class="d-flex flex-column align-items-center justify-content-center text-center">
       <p class="clinicLabel">Clinic Name</p>
       <h2 class="display-5" th:text="${clinic.name}"></h2>
       <p class="clinicLabel">Address</p>
@@ -35,7 +33,7 @@
       </a>
     </section>
 
-    <section class="d-flex flex-column align-items-center justify-content-center m-auto p-2">
+    <section class="d-flex flex-column align-items-center justify-content-center p-2">
         <a th:href="@{'https://maps.google.com/?q=' + ' ' + ${clinic.address} + ' ' + ${clinic.city} + ' ' + ${clinic.state} + ' ' + ${clinic.zip}}">
           <img th:src="@{'https://maps.googleapis.com/maps/api/staticmap?center=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&markers=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&zoom=12&size=400x400&key=AIzaSyCjFOLSO6Os1tn4eSNktZ_tyKEm6yWUHh4'}">
         </a>
