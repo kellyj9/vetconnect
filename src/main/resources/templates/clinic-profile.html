@@ -10,7 +10,8 @@
 </header>
 
 <div class="cprofile p-4 m-auto position-relative d-flex flex-wrap">
-  <div th:if="${!(clinic.claim == null) and (clinic.claim.status == 'approved')}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
+  <div th:if="${!(claim == null) and (
+  claim.status == 'approved')}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
     <div class="bg-success text-white font-weight-bold rounded px-3 py-1" >Claimed</div>
     <div class="claimedTagContent">This tag indicates the vet that operates this practice has verified this information and claimed this clinic.</div>
   </div>

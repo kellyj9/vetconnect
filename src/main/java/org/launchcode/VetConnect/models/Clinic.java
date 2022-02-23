@@ -39,9 +39,6 @@ public class Clinic extends AbstractEntity{
 
     private String emergency;
 
-    @OneToOne
-    private Claim claim;
-
     public Clinic() {}
 
 //    Initialize the id and value fields
@@ -122,13 +119,5 @@ public class Clinic extends AbstractEntity{
 
     public void setEmergency(String emergency) {
         this.emergency = emergency;
-    }
-
-    public Claim getClaim() {
-        return claim;
-    }
-
-    public void setClaim(Claim claim) {
-        this.claim = claim;
     }
 }
