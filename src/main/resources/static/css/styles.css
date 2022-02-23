@@ -69,11 +69,8 @@ table td.expand {
 
 .cprofile {
    background-color: white;
-   text-align: center;
-   padding: 10px;
    border-radius: 10px;
-   margin: auto;
-   max-width: 60%;
+   max-width: 90%;
 }
 
 .clinicLabel {
