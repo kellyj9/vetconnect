@@ -43,7 +43,7 @@ public class ClinicController extends VetConnectController {
 
         User user = getUserFromSession(request.getSession(false));
         if(user == null) {
-            return "redirect:login";
+            return "redirect:error";
         }
 
         if(errors.hasErrors()) {
