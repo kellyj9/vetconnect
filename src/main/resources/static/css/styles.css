@@ -69,11 +69,15 @@ table td.expand {
 
 .cprofile {
    background-color: white;
-   text-align: center;
-   padding: 10px;
    border-radius: 10px;
-   margin: auto;
    max-width: 90%;
+}
+
+.clinicLabel {
+    margin-bottom: 0;
+    font-style: italic;
+    color: rgb(149, 165, 166);
+
 }
 
 .user-type:hover {
@@ -99,6 +103,14 @@ table td.expand {
 
 a {
     text-decoration: none;
+}
+
+.checked {
+  color: orange;
+}
+
+.rating_star {
+   cursor: pointer;
 }
 
 .claimedTag {
