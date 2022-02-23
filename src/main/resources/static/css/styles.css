@@ -138,3 +138,12 @@ a {
 }
 
 .claimedTag:hover .claimedTagContent { display: block; }
+
+.fa-location-arrow {
+    color: blue;
+    cursor: pointer;
+
+}
+.fa-location-arrow:hover {
+    opacity: .75;
+}

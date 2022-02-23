@@ -29,6 +29,10 @@ public class ClinicController extends VetConnectController {
     @GetMapping(value = "add-a-clinic")
     public String addAClinicForm(Model model, HttpServletRequest request) {
 
+        User this_user = getUserFromSession(request.getSession(false));
+        if(this_user == null) {
+            return "redirect:login";
+        }
         model.addAttribute(new Request());
 
         return "add-a-clinic";
@@ -36,6 +40,12 @@ public class ClinicController extends VetConnectController {
 
     @PostMapping(value = "add-a-clinic")
     public String addAClinicRequest(@ModelAttribute @Valid Request newRequest, Errors errors, HttpServletRequest request, Model model) {
+
+        User user = getUserFromSession(request.getSession(false));
+        if(user == null) {
+            return "redirect:error";
+        }
+
         if(errors.hasErrors()) {
             return "add-a-clinic";
         }
@@ -53,7 +63,6 @@ public class ClinicController extends VetConnectController {
             newRequest.setEmergency("0");
         }
 
-        User user = getUserFromSession(request.getSession(false));
 
         if(user.getUserType() == "vet") {
             newRequest.setClaimed("1");
@@ -64,6 +73,9 @@ public class ClinicController extends VetConnectController {
         newRequest.setUser(user);
         newRequest.setStatus("Pending");
         newRequest.setPhoneNumber(newRequest.getPhoneNumber().replaceAll("[^0-9]",""));
+
+
+        newRequest.setWebsite(newRequest.getWebsite().replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)",""));
 
         requestRepository.save(newRequest);
 
