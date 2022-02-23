@@ -29,7 +29,7 @@ public class ClaimController extends VetConnectController{
     public String processClaimRequest(@RequestParam Long clinicId, HttpServletRequest request) {
         User user = getUserFromSession(request.getSession(false));
         if(user == null) {
-            return "redirect:login";
+            return "redirect:error";
         }
 
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
