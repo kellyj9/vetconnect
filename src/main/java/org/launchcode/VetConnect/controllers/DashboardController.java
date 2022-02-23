@@ -119,21 +119,20 @@ public class DashboardController extends VetConnectController{
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("totalItems", page.getTotalElements());
         }
-        //FOR LATER:
-//        else {
-//            List<Claim> claims;
-//            Page<Claim> page;
-//            if (filter.equals("all")) {
-//                page =  claimRepository.findAll(pageable);
-//            } else {
-//                page = claimRepository.findAllByStatus(filter, pageable);
-//            }
-//            claim = page.getContent();
-//            model.addAttribute("claims", claims);
-//            model.addAttribute("currentPage", pageNo);
-//            model.addAttribute("totalPages", page.getTotalPages());
-//            model.addAttribute("totalItems", page.getTotalElements());
-//        }
+      else if (viewType.equals("claims")) {
+            List<Claim> claims;
+            Page<Claim> page;
+            if (filter.equals("all")) {
+                page = (Page<Claim>) claimRepository.findAll(pageable);
+            } else {
+                page = claimRepository.findAllByStatus(filter, pageable);
+            }
+            claims = page.getContent();
+            model.addAttribute("claims", claims);
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("totalItems", page.getTotalElements());
+        }
 
         model.addAttribute("viewType", viewType);
         model.addAttribute("filter", filter);
@@ -164,15 +163,12 @@ public class DashboardController extends VetConnectController{
         return "redirect:dashboard-admin/page/1?viewType=requests&filter=" + filter;
     }
 
-
-
     @PostMapping("admin-request-decline")
     public String processDeclineClinicAddRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long requestId) {
         User this_user = getUserFromSession(request.getSession(false));
         if (!this_user.getUserType().equals("admin")) {
             return "redirect:error";
         }
-       // return "index"; // test
 
         // make sure the requestId in the url corresponds with an existing record
         Optional<Request> optionalRequest = requestRepository.findById(requestId);
@@ -187,5 +183,44 @@ public class DashboardController extends VetConnectController{
         return "redirect:dashboard-admin/page/1?viewType=requests&filter=" + filter;
     }
 
+    @PostMapping("admin-claim-approve")
+    public String processApproveClinicClaimRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long claimId) {
+        User this_user = getUserFromSession(request.getSession(false));
+        if (!this_user.getUserType().equals("admin")) {
+            return "redirect:error";
+        }
+
+        // make sure the requestId in the url corresponds with an existing record
+        Optional<Claim> optionalClaim = claimRepository.findById(claimId);
+        if (optionalClaim.isPresent()) {
+            Claim claimTmp = optionalClaim.get();
+            claimTmp.setStatus("approved");
+            claimRepository.save(claimTmp);
+        }
+        else {
+            return "redirect:error";
+        }
+        return "redirect:dashboard-admin/page/1?viewType=claims&filter=" + filter;
+    }
+
+    @PostMapping("admin-claim-decline")
+    public String processDeclineClinicClaimRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long claimId) {
+        User this_user = getUserFromSession(request.getSession(false));
+        if (!this_user.getUserType().equals("admin")) {
+            return "redirect:error";
+        }
+
+        // make sure the requestId in the url corresponds with an existing record
+        Optional<Claim> optionalClaim = claimRepository.findById(claimId);
+        if (optionalClaim.isPresent()) {
+            Claim claimTmp = optionalClaim.get();
+            claimTmp.setStatus("declined");
+            claimRepository.save(claimTmp);
+        }
+        else {
+            return "redirect:error";
+        }
+        return "redirect:dashboard-admin/page/1?viewType=claims&filter=" + filter;
+    }
 
 }
