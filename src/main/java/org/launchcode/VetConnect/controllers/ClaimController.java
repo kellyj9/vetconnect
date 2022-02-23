@@ -26,6 +26,10 @@ public class ClaimController extends VetConnectController{
     @GetMapping(value = "claim-request")
     public String processClaimRequest(@RequestParam Long clinicId, HttpServletRequest request) {
         User user = getUserFromSession(request.getSession(false));
+        if(user == null) {
+            return "redirect:error";
+        }
+
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
 
         Claim newClaim = new Claim(clinic.get(), user);

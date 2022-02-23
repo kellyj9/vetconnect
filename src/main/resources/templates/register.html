@@ -65,8 +65,8 @@
                             </div>
 
                             <div class="row justify-content-center align-items-center" >
-                                <div  class="col-md-6 mb-3 pb-2 user-type " onclick="userTypeClick('petOwner')">
-                                    <div id="petOwner" class="form-outline p-3 border border-dark rounded bg-primary text-light">
+                                <div  class="col-md-6 mb-3 pb-2 user-type " >
+                                    <div id="petOwner" class="form-outline p-3 border border-dark rounded " th:classappend="${registerFormDTO.userType == 'petOwner' or registerFormDTO.userType == null ? 'bg-primary text-light' : '' }" onclick="userTypeClick('petOwner')">
                                             <h2 class="text-center">I am a Pet Owner!</h2>
                                             <p>As a Pet Owner you will be able to </p>
                                             <ul>
@@ -76,8 +76,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-3 pb-2 user-type" onclick="userTypeClick('vet')" >
-                                    <div id="vet" class="form-outline p-3 border border-dark rounded ">
+                                <div class="col-md-6 mb-3 pb-2 user-type"  >
+                                    <div id="vet" class="form-outline p-3 border border-dark rounded " th:classappend="${registerFormDTO.userType == 'vet' ? 'bg-primary text-light' : '' }" onclick="userTypeClick('vet')">
                                         <h2 class="text-center">I am a Vet!</h2>
                                         <p>As a vet you will be able to </p>
                                         <ul>
