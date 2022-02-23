@@ -1,8 +1,10 @@
 package org.launchcode.VetConnect.controllers;
 
+import org.launchcode.VetConnect.models.Claim;
 import org.launchcode.VetConnect.models.Clinic;
 import org.launchcode.VetConnect.models.Request;
 import org.launchcode.VetConnect.models.User;
+import org.launchcode.VetConnect.models.data.ClaimRepository;
 import org.launchcode.VetConnect.models.data.ClinicRepository;
 import org.launchcode.VetConnect.models.data.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class ClinicController extends VetConnectController {
 
     @Autowired
     RequestRepository requestRepository;
+
+    @Autowired
+    ClaimRepository claimRepository;
 
 
     @GetMapping(value = "add-a-clinic")
@@ -91,9 +96,10 @@ public class ClinicController extends VetConnectController {
     public String editClinicForm(Model model, HttpServletRequest request, @RequestParam Long clinicId) {
         User user = getUserFromSession(request.getSession(false));
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
+        Claim claim = claimRepository.findByClinicId(clinicId);
 
 
-        if(user == null || (user.getId() != clinic.get().getClaim().getUser().getId())) {
+        if(user == null || (user.getId() != claimRepository.findByClinicId(clinicId).getUser().getId())) {
             return "redirect:dashboard";
         }
 
