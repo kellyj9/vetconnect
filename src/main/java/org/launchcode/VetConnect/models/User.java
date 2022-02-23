@@ -2,13 +2,13 @@ package org.launchcode.VetConnect.models;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class User extends AbstractEntity {
@@ -34,6 +34,9 @@ public class User extends AbstractEntity {
     @OneToMany(mappedBy = "user")
     private final List<Request> requests = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private final List<Claim> claims = new ArrayList<>();
+
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
@@ -47,6 +50,10 @@ public class User extends AbstractEntity {
         this.pwHash = encoder.encode(password);
     }
 
+    public List<Claim> getClaims() {
+        return claims;
+    }
+    
     public List<Request> getRequests() {
         return requests;
     }

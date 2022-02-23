@@ -6,6 +6,7 @@ import org.springframework.format.annotation.NumberFormat;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -44,6 +45,9 @@ public class Clinic extends AbstractEntity{
 
     @OneToMany(mappedBy = "clinic")
     private final List<Review> reviews = new ArrayList<>();
+
+    @OneToOne
+    private Claim claim;
 
     public Clinic() {}
 
@@ -129,5 +133,12 @@ public class Clinic extends AbstractEntity{
 
     public List<Review> getReviews() {
         return reviews;
+    }
+    public Claim getClaim() {
+        return claim;
+    }
+
+    public void setClaim(Claim claim) {
+        this.claim = claim;
     }
 }

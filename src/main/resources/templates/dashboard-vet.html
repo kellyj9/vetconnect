@@ -3,11 +3,95 @@
 <head th:replace="fragments :: head"></head>
 <body>
 
-<nav th:replace="fragments :: nav"></nav>
+<nav th:replace="fragments :: nav-top"></nav>
 <header><h1>My Dashboard</h1></header>
+    <div th:replace="fragments :: add-clinic-instructions"></div>
+    <div th:fragment="claim-clinic-instructions" class="container mb-3">
+        <div class="accordion accordion-flush" id="accordionAddClinic">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                        <strong>How to claim a clinic</strong>
+                    </button>
+                </h3>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddClinic">
+                    <div class="accordion-body">
+                        <p>
+                            <strong>Step 1: </strong>Search for the clinic in the VetConnect listing.
+                        </p>
+                        <p>
+                            <strong>Step 2: </strong> Select the "Claim this clinic" button on the top-right of the profile. If the clinic is not in the search results, click the button to <a href="/add-a-clinic">'Add a Clinic'</a> </p>
+                        <p>
+                            <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
+                        </p>
+                        
+                        <p>
+                            <strong>Step 4: </strong> You will then be able to visit the clinic profile and claim the clinic.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div th:replace="fragments :: add-clinic-instructions"></div>
-<div th:replace="fragments :: requests"></div>
+    <div class="container">
+        <div>
+            <h3>My Claimed Clinics</h3>
+            <p th:if="${approvedClaims.isEmpty()}">No claims have been approved yet!</p>
+                <th:block th:each="claim : ${approvedClaims}">
+                    <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative">
+                        <a th:href="@{/clinic-profile(clinicId=${claim.clinic.id})}"><h3 th:text="${claim.clinic.name}"></h3></a>
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <th class="shrink">Address: </th>
+                                <td class="expand" th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></td>
+                            </tr>
+                            <tr>
+                                <th class="shrink">Phone Number: </th>
+                                <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
+                            </tr>
+                            <tr>
+                                <th class="shrink">Website: </th>
+                                <td class="expand" th:text="${claim.clinic.website}"></td>
+                            </tr>
+                            <tr>
+                                <th class="shrink">Emergencies? </th>
+                                <td class="expand" th:text="${claim.clinic.emergency} == '1' ? 'Yes' : 'No'"></td>
+                            </tr>
+                        </table>
+                        <div class="position-absolute top-0 end-0 my-2 mx-3" >
+                            <a class="btn btn-primary" href=""><p class="mb-0 text-end">Edit clinic details</p></a>
+                        </div>
+                    </div>
+                </th:block>
 
-</body>
+
+            <h3>My Claim a Clinic Requests</h3>
+            <div th:fragment="claims" class="container g-6">
+                <div>
+                    <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
+                    <th:block th:each="claim : ${claims}">
+                        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
+                            <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
+                            <div>
+                                <p th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></p>
+                            </div>
+                            <div class="position-absolute top-0 end-0 my-2 mx-3" >
+                                <p class="mb-0 text-end" th:text="'Date Created: ' + ${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></p>
+                                <p class="mb-0 text-end" th:text="'Status: ' + ${claim.status.substring(0, 1).toUpperCase() + claim.status.substring(1)}"></p>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+
+            <h3>My New Clinic Requests</h3>
+            <div th:replace="fragments :: requests"></div>
+            <p th:if="${requests.isEmpty()}">No requests have been made yet!</p>
+
+        </div>
+    </div>
+
+    </body>
 </html>
