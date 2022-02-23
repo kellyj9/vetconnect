@@ -51,98 +51,97 @@
 <!-- END FILTER FORM -->
 
 <div class="container">
-    <p th:if="${viewType} == 'requests'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to ' + '\'Add a Clinic\' : ' + ${totalItems} + ' total'"></p>
-    <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to ' + '\'Claim a Clinic\' : ' + ${totalItems} + ' total'"></p>
+    <p th:if="${viewType} == 'requests'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Add a clinic : ' + ${totalItems} + ' total'"></p>
+    <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Claim a clinic : ' + ${totalItems} + ' total'"></p>
 </div>
 
 <div th:replace="fragments :: dashboard-admin-pagination"></div>
 
 <div th:if="${viewType} == 'requests'"  class="container g-6">
-        <th:block th:each="request : ${requests}">
-            <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
-                <h3 th:text="${request.name}" class="request-heading"></h3>
-                <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}"></div>
-                <table class="table table-sm table-borderless">
-                    <tr>
-                        <th class="shrink">Status: </th>
-                        <td class="expand" th:text="${request.status}"></td>
-                    </tr>
-                    <tr>
-                        <th class="shrink">Address: </th>
-                        <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
-                    </tr>
-                    <tr>
-                        <th class="shrink">Phone Number: </th>
-                        <td class="expand" th:text="${request.phoneNumberToString()}"></td>
-                    </tr>
-                    <tr>
-                        <th class="shrink">Website: </th>
-                        <td class="expand" th:text="${request.website}"></td>
-                    </tr>
-                    <tr>
-                        <th class="shrink">Emergencies? </th>
-                        <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
-                    </tr>
-                </table>
-                <table class="table table-sm table-borderless">
-                    <tr th:if="${request.status.equals('Pending')}">
-                        <td class="shrink">
-                            <!-- Modal Launch Button-->
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveRequestModal">
-                                Approve this clinic
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="approveRequestModal" tabindex="-1" aria-labelledby="approveRequestModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="approveRequestModalLabel">Please Confirm</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Please confirm you want to <strong>Approve</strong> this 'Add a Clinic' request.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <form method="POST" th:action="@{/admin-request-approve(filter=${filter},requestId=${request.id})}">
-                                                <input class="btn btn-success" type="submit" value="Confirm">
-                                            </form>
-                                        </div>
+    <th:block th:each="request : ${requests}">
+        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${request.status.toLowerCase()}">
+            <h3 th:text="${request.name}" class="request-heading"></h3>
+            <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="${#dates.format(request.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+            <table class="table table-sm table-borderless">
+                <tr>
+                    <th class="shrink">Status: </th>
+                    <td class="expand" th:text="${request.status}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Address: </th>
+                    <td class="expand" th:text="${request.address} + ' ' + ${request.city} + ', ' + ${request.state} + ' ' + ${request.zip}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Phone Number: </th>
+                    <td class="expand" th:text="${request.phoneNumberToString()}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Website: </th>
+                    <td class="expand" th:text="${request.website}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Emergencies? </th>
+                    <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                </tr>
+            </table>
+            <table class="table table-sm table-borderless">
+                <tr th:if="${request.status.equals('Pending')}">
+                    <td class="shrink">
+                        <!-- Modal Launch Button-->
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveRequestModal">
+                            Approve this clinic
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="approveRequestModal" tabindex="-1" aria-labelledby="approveRequestModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="approveRequestModalLabel">Please Confirm</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Please confirm you want to <strong>Approve</strong> this 'Add a Clinic' request.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <form method="POST" th:action="@{/admin-request-approve(filter=${filter},requestId=${request.id})}">
+                                            <input class="btn btn-success" type="submit" value="Confirm">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                        <td class="expand">
-                            <!--Modal Launch Button-->
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#declineRequestModal">
-                                Decline this clinic
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="declineRequestModal" tabindex="-1" aria-labelledby="declineRequestModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="declineRequestModalLabel">Please Confirm</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Please confirm you want to <strong>Decline</strong> this 'Add a Clinic' request.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <form method="POST" th:action="@{/admin-request-decline(filter=${filter},requestId=${request.id})}">
-                                                <input class="btn btn-danger" type="submit" value="Confirm">
-                                            </form>
-                                        </div>
+                        </div>
+                    </td>
+                    <td class="expand">
+                        <!--Modal Launch Button-->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#declineRequestModal">
+                            Decline this clinic
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="declineRequestModal" tabindex="-1" aria-labelledby="declineRequestModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="declineRequestModalLabel">Please Confirm</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Please confirm you want to <strong>Decline</strong> this 'Add a Clinic' request.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <form method="POST" th:action="@{/admin-request-decline(filter=${filter},requestId=${request.id})}">
+                                            <input class="btn btn-danger" type="submit" value="Confirm">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </th:block>
-    </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </th:block>
 </div>
 
 <div th:if="${viewType} == 'claims'" class="container g-6">
@@ -168,6 +167,62 @@
                     <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
                 </tr>
                 <tr>
+                </tr>
+            </table>
+            <table class="table table-sm table-borderless">
+                <tr th:if="${claim.status.equals('pending')}">
+                    <td class="shrink">
+                        <!-- Modal Launch Button-->
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveClaimModal">
+                            Approve this claim
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="approveClaimModal" tabindex="-1" aria-labelledby="approveClaimModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="approveClaimModalLabel">Please Confirm</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Please confirm you want to <strong>Approve</strong> this Claim request.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <form method="POST" th:action="@{/admin-claim-approve(filter=${filter},claimId=${claim.id})}">
+                                            <input class="btn btn-success" type="submit" value="Confirm">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="expand">
+                        <!--Modal Launch Button-->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#declineClaimModal">
+                            Decline this claim
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="declineClaimModal" tabindex="-1" aria-labelledby="declineClaimModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="declineClaimModalLabel">Please Confirm</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Please confirm you want to <strong>Decline</strong> this Claim request.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <form method="POST" th:action="@{/admin-claim-decline(filter=${filter},claimId=${claim.id})}">
+                                            <input class="btn btn-danger" type="submit" value="Confirm">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>

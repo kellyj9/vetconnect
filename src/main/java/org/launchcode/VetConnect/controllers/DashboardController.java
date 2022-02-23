@@ -163,15 +163,12 @@ public class DashboardController extends VetConnectController{
         return "redirect:dashboard-admin/page/1?viewType=requests&filter=" + filter;
     }
 
-
-
     @PostMapping("admin-request-decline")
     public String processDeclineClinicAddRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long requestId) {
         User this_user = getUserFromSession(request.getSession(false));
         if (!this_user.getUserType().equals("admin")) {
             return "redirect:error";
         }
-       // return "index"; // test
 
         // make sure the requestId in the url corresponds with an existing record
         Optional<Request> optionalRequest = requestRepository.findById(requestId);
@@ -186,5 +183,44 @@ public class DashboardController extends VetConnectController{
         return "redirect:dashboard-admin/page/1?viewType=requests&filter=" + filter;
     }
 
+    @PostMapping("admin-claim-approve")
+    public String processApproveClinicClaimRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long claimId) {
+        User this_user = getUserFromSession(request.getSession(false));
+        if (!this_user.getUserType().equals("admin")) {
+            return "redirect:error";
+        }
+
+        // make sure the requestId in the url corresponds with an existing record
+        Optional<Claim> optionalClaim = claimRepository.findById(claimId);
+        if (optionalClaim.isPresent()) {
+            Claim claimTmp = optionalClaim.get();
+            claimTmp.setStatus("approved");
+            claimRepository.save(claimTmp);
+        }
+        else {
+            return "redirect:error";
+        }
+        return "redirect:dashboard-admin/page/1?viewType=claims&filter=" + filter;
+    }
+
+    @PostMapping("admin-claim-decline")
+    public String processDeclineClinicClaimRequest(Model model, HttpServletRequest request, @RequestParam String filter, @RequestParam Long claimId) {
+        User this_user = getUserFromSession(request.getSession(false));
+        if (!this_user.getUserType().equals("admin")) {
+            return "redirect:error";
+        }
+
+        // make sure the requestId in the url corresponds with an existing record
+        Optional<Claim> optionalClaim = claimRepository.findById(claimId);
+        if (optionalClaim.isPresent()) {
+            Claim claimTmp = optionalClaim.get();
+            claimTmp.setStatus("declined");
+            claimRepository.save(claimTmp);
+        }
+        else {
+            return "redirect:error";
+        }
+        return "redirect:dashboard-admin/page/1?viewType=claims&filter=" + filter;
+    }
 
 }
