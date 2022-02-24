@@ -55,7 +55,7 @@
     <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Claim a clinic : ' + ${totalItems} + ' total'"></p>
 </div>
 
-<div th:replace="fragments :: dashboard-admin-pagination"></div>
+<div th:replace="fragments :: dashboard-pagination"></div>
 
 <div th:if="${viewType} == 'requests'"  class="container g-6">
     <th:block th:each="request : ${requests}">
@@ -80,7 +80,7 @@
                     <td class="expand" th:text="${request.website}"></td>
                 </tr>
                 <tr>
-                    <th class="shrink">Emergencies? </th>
+                    <th class="shrink">Open 24 hours? </th>
                     <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
                 </tr>
             </table>
@@ -166,8 +166,6 @@
                     <th class="shrink">Clinic Phone Number: </th>
                     <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
                 </tr>
-                <tr>
-                </tr>
             </table>
             <table class="table table-sm table-borderless">
                 <tr th:if="${claim.status.equals('pending')}">
@@ -229,7 +227,7 @@
     </th:block>
 </div>
 
-<div th:replace="fragments :: dashboard-admin-pagination"></div>
+<div th:replace="fragments :: dashboard-pagination"></div>
 
 </body>
 </html>
