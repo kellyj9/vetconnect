@@ -12,7 +12,10 @@ import java.util.List;
 public interface ClaimRepository extends CrudRepository<Claim, Long> {
 
     List<Claim> findByUserIdAndStatus(Long user_id, String status);
+    Page<Claim> findAllByUserId(Long userId, Pageable pageable);
     Page<Claim> findAllByStatus(String status, Pageable pageable);
+    Page<Claim> findAllByUserIdAndStatus(Long userId, String status, Pageable pageable);
     Page<Claim> findAll(Pageable pageable);
     Claim findByClinicId(Long clinicId);
+
 }
