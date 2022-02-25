@@ -29,7 +29,7 @@ public class ClaimController extends VetConnectController{
     @GetMapping(value = "claim-request")
     public String processClaimRequest(@RequestParam Long clinicId, HttpServletRequest request) {
         User user = getUserFromSession(request.getSession(false));
-        if(user == null || !(user.getUserType().toLowerCase().equals("vet"))) {
+        if(user == null || !(user.getUserType().equals("vet"))) {
             return "redirect:error";
         }
 
