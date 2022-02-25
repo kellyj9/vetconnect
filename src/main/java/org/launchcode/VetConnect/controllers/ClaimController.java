@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -26,7 +27,7 @@ public class ClaimController extends VetConnectController{
     @GetMapping(value = "claim-request")
     public String processClaimRequest(@RequestParam Long clinicId, HttpServletRequest request) {
         User user = getUserFromSession(request.getSession(false));
-        if(user == null) {
+        if(user == null || !(user.getUserType().equals("vet"))) {
             return "redirect:error";
         }
 
