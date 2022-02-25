@@ -35,6 +35,6 @@ public class ClaimController extends VetConnectController{
         Claim newClaim = new Claim(clinic.get(), user);
         claimRepository.save(newClaim);
 
-        return "redirect:dashboard-vet";
+        return "redirect:dashboard";
     }
 }
