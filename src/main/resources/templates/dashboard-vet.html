@@ -24,7 +24,6 @@
                         <p>
                             <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
                         </p>
-                        
                         <p>
                             <strong>Step 4: </strong> You will then be able to visit the clinic profile and claim the clinic.
                         </p>
@@ -34,64 +33,90 @@
         </div>
     </div>
 
-    <div class="container">
-        <div>
-            <h3>My Claimed Clinics</h3>
-            <p th:if="${approvedClaims.isEmpty()}">No claims have been approved yet!</p>
-                <th:block th:each="claim : ${approvedClaims}">
-                    <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative">
-                        <a th:href="@{/clinic-profile(clinicId=${claim.clinic.id})}"><h3 th:text="${claim.clinic.name}"></h3></a>
-                        <table class="table table-sm table-borderless">
-                            <tr>
-                                <th class="shrink">Address: </th>
-                                <td class="expand" th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></td>
-                            </tr>
-                            <tr>
-                                <th class="shrink">Phone Number: </th>
-                                <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
-                            </tr>
-                            <tr>
-                                <th class="shrink">Website: </th>
-                                <td class="expand" th:text="${claim.clinic.website}"></td>
-                            </tr>
-                            <tr>
-                                <th class="shrink">Emergencies? </th>
-                                <td class="expand" th:text="${claim.clinic.emergency} == '1' ? 'Yes' : 'No'"></td>
-                            </tr>
-                        </table>
-                        <div class="position-absolute top-0 end-0 my-2 mx-3" >
-                            <a class="btn btn-primary" th:href="@{/edit-a-clinic(clinicId=${claim.clinic.id})}"><p class="mb-0 text-end">Edit clinic details</p></a>
-                        </div>
-                    </div>
-                </th:block>
-
-
-            <h3>My Claim a Clinic Requests</h3>
-            <div th:fragment="claims" class="container g-6">
-                <div>
-                    <p th:if="${claims.isEmpty()}">No claims have been made yet!</p>
-                    <th:block th:each="claim : ${claims}">
-                        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
-                            <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
-                            <div>
-                                <p th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></p>
-                            </div>
-                            <div class="position-absolute top-0 end-0 my-2 mx-3" >
-                                <p class="mb-0 text-end" th:text="'Date Created: ' + ${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></p>
-                                <p class="mb-0 text-end" th:text="'Status: ' + ${claim.status.substring(0, 1).toUpperCase() + claim.status.substring(1)}"></p>
-                            </div>
-                        </div>
-                    </th:block>
+<!-- START FILTER FORM -->
+<div class="container g-6">
+    <div class="d-inline-flex flex-row p-3 border border-secondary border-1 rounded">
+        <form method="GET" th:action="@{/dashboard-vet/page/1}">
+            <div class="d-inline-flex flex-column me-2">
+                <select class="form-select" name="viewType" aria-label="Select view type">
+                    <option th:value="'requests'" th:text="'Vew Add a Clinic requests'" th:selected="${viewType} == 'requests'"></option>
+                    <option th:value="'claims'" th:text="'View Claim requests'" th:selected="${viewType} == 'claims'"></option>
+                </select>
+            </div>
+            <div class="d-inline-flex flex-row align-items-center">
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="pending" id="pendingCheck2"  th:checked="${filter == null || filter == 'pending'}">
+                    <label class="form-check-label" for="pendingCheck2">
+                        Pending
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="approved" id="approvedCheck2" th:checked="${filter == 'approved'}">
+                    <label class="form-check-label" for="approvedCheck2">
+                        Approved
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="declined" id="declinedCheck2"  th:checked="${filter == 'declined'}">
+                    <label class="form-check-label" for="declinedCheck2">
+                        Declined
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="all" id="allCheck2"  th:checked="${filter == 'all'}">
+                    <label class="form-check-label" for="allCheck2">
+                        View All
+                    </label>
                 </div>
             </div>
-
-
-            <h3>My New Clinic Requests</h3>
-            <div th:replace="fragments :: requests"></div>
-            <p th:if="${requests.isEmpty()}">No requests have been made yet!</p>
-
-        </div>
+            <div class="d-inline-flex flex-row">
+                <button class="btn btn-primary" type="submit">Go!</button>
+            </div>
+        </form>
     </div>
+</div>
+<!-- END FILTER FORM -->
 
-    </body>
+<div class="container">
+    <p th:if="${viewType} == 'requests'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Add a clinic : ' + ${totalItems} + ' total'"></p>
+    <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Claim a clinic : ' + ${totalItems} + ' total'"></p>
+</div>
+
+<div th:replace="fragments :: dashboard-pagination"></div>
+
+<div th:if="${viewType} == 'requests'" th:replace="fragments :: requests"></div>
+
+<div th:if="${viewType} == 'claims'" class="container g-6">
+    <th:block th:each="claim : ${claims}">
+        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
+            <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
+            <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+            <table class="table table-sm table-borderless">
+                <tr>
+                    <th class="shrink">Status: </th>
+                    <td class="expand" th:text="${#strings.capitalize(claim.status)}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Claim requested by: </th>
+                    <td class="expand" th:text="${claim.user.firstName} + ' ' + ${claim.user.lastName}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Clinic Address: </th>
+                    <td class="expand" th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Clinic Phone Number: </th>
+                    <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
+                </tr>
+            </table>
+            <div th:if="${userType == 'vet' and #strings.toLowerCase(claim.status) == 'approved'}" class="position-absolute top-0 end-0 my-2 mx-3" >
+                <a class="btn btn-primary" th:href="@{/edit-a-clinic(clinicId=${claim.clinic.id})}"><p class="mb-0 text-end">Edit clinic details</p></a>
+            </div>
+        </div>
+    </th:block>
+</div>
+
+<div th:replace="fragments :: dashboard-pagination"></div>
+
+</body>
 </html>

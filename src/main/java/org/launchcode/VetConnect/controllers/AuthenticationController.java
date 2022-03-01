@@ -22,7 +22,13 @@ public class AuthenticationController extends VetConnectController{
     }
 
     @GetMapping("/register")
-    public String displayRegistrationForm(Model model) {
+    public String displayRegistrationForm(Model model, HttpServletRequest request) {
+        User user = getUserFromSession(request.getSession(false));
+
+        if(!(user == null)) {
+            return "redirect:dashboard";
+        }
+
         model.addAttribute(new RegisterFormDTO());
         return "register";
     }
@@ -61,7 +67,13 @@ public class AuthenticationController extends VetConnectController{
     }
 
     @GetMapping(value="login")
-    public String displayLoginForm(Model model) {
+    public String displayLoginForm(Model model, HttpServletRequest request) {
+        User user = getUserFromSession(request.getSession(false));
+
+        if(!(user == null)) {
+            return "redirect:dashboard";
+        }
+
         model.addAttribute(new LoginFormDTO());
         return "login";
     }

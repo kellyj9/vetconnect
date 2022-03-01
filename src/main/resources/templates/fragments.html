@@ -123,21 +123,27 @@
     <p th:if="${requests.isEmpty()}">No requests yet.</p>
 </div>
 
-<div th:fragment="dashboard-admin-pagination" class="container">
+<div th:fragment="dashboard-pagination" class="container">
     <nav th:if="${totalPages > 1}" class="nav-pagination" aria-label="Page navigation">
         <ul class="pagination">
             <li class="page-item" th:classappend="${currentPage > 1} ? '' : 'disabled'">
-                <a th:if="${currentPage > 1}" class="page-link" th:href="@{'/dashboard-admin/page/' + ${currentPage - 1}  + '?viewType=' + ${viewType} + '&filter=' + ${filter}}" th:text="'Previous'"></a>
+                <a th:if="${userType == 'admin' and currentPage > 1}" class="page-link" th:href="@{'/dashboard-admin/page/' + ${currentPage - 1}  + '?viewType=' + ${viewType} + '&filter=' + ${filter}}" th:text="'Previous'"></a>
+                <a th:if="${userType == 'vet' and currentPage > 1}" class="page-link" th:href="@{'/dashboard-vet/page/' + ${currentPage - 1}  + '?viewType=' + ${viewType} + '&filter=' + ${filter}}" th:text="'Previous'"></a>
+                <a th:if="${userType == 'petOwner' and currentPage > 1}" class="page-link" th:href="@{'/dashboard-pet-owner/page/' + ${currentPage - 1}  + '?filter=' + ${filter}}" th:text="'Previous'"></a>
                 <span th:unless="${currentPage > 1}" class="page-link" th:text="'Previous'"></span>
             </li>
             <th:block th:each="i: ${#numbers.sequence(1, totalPages)}">
                 <li class="page-item" th:classappend="${currentPage != i} ? '' : 'active'">
-                    <a th:if="${currentPage != i}" class="page-link" th:href="@{'/dashboard-admin/page/' + ${i} + '?viewType='  + ${viewType}  + '&filter=' + ${filter}}" th:text="${i}"></a>
+                    <a th:if="${userType == 'admin' and currentPage != i}" class="page-link" th:href="@{'/dashboard-admin/page/' + ${i} + '?viewType='  + ${viewType}  + '&filter=' + ${filter}}" th:text="${i}"></a>
+                    <a th:if="${userType == 'vet' and currentPage != i}" class="page-link" th:href="@{'/dashboard-vet/page/' + ${i} + '?viewType='  + ${viewType}  + '&filter=' + ${filter}}" th:text="${i}"></a>
+                    <a th:if="${userType == 'petOwner' and currentPage != i}" class="page-link" th:href="@{'/dashboard-pet-owner/page/' + ${i} + '?filter=' + ${filter}}" th:text="${i}"></a>
                     <span th:unless="${currentPage != i}" class="page-link" th:text="${i}"></span>
                 </li>
             </th:block>
             <li class="page-item" th:classappend="${currentPage < totalPages} ? '' : 'disabled'">
-                <a th:if="${currentPage < totalPages}" class="page-link" th:href="@{'/dashboard-admin/page/' + ${currentPage + 1} + '?viewType='  + ${viewType} + '&filter=' + ${filter}}" th:text="'Next'"></a>
+                <a th:if="${userType == 'admin' and currentPage < totalPages}" class="page-link" th:href="@{'/dashboard-admin/page/' + ${currentPage + 1} + '?viewType='  + ${viewType} + '&filter=' + ${filter}}" th:text="'Next'"></a>
+                <a th:if="${userType == 'vet' and currentPage < totalPages}" class="page-link" th:href="@{'/dashboard-vet/page/' + ${currentPage + 1} + '?viewType='  + ${viewType} + '&filter=' + ${filter}}" th:text="'Next'"></a>
+                <a th:if="${userType == 'petOwner' and currentPage < totalPages}" class="page-link" th:href="@{'/dashboard-pet-owner/page/' + ${currentPage + 1} + '?filter=' + ${filter}}" th:text="'Next'"></a>
                 <span th:unless="${currentPage < totalPages}" class="page-link" th:text="'Next'"></span>
             </li>
         </ul>
@@ -167,7 +173,7 @@
                             <td class="expand" th:text="${request.website}"></td>
                     </tr>
                     <tr>
-                        <th class="shrink">Emergencies? </th>
+                        <th class="shrink">Open 24 hours? </th>
                         <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
                     </tr>
                 </table>
@@ -184,7 +190,6 @@
                 <label for="str4" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
                 <label for="str5" onclick="handleStarClick(this)" class="fa fa-star rating_star"></label>
 
-
                 <input class="d-none" id="str1" value="1" type="radio" name="rating" th:field="${review.reviewRating}" >
                 <input class="d-none" id="str2" value="2" type="radio" name="rating" th:field="${review.reviewRating}">
                 <input class="d-none" id="str3" value="3" type="radio" name="rating" th:field="${review.reviewRating}">
@@ -199,8 +204,6 @@
             <button class="btn btn-primary mt-3" type="submit">Submit Rating</button>
         </form>
 </div>
-
-
 
 </body>
 </html>
