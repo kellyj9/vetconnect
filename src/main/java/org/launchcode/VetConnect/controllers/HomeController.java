@@ -99,7 +99,9 @@ public class HomeController extends VetConnectController {
             model.addAttribute("clinic", clinic.get());
         }
 
-        model.addAttribute("userId", user.getId());
+        if(user.getId() == claim.getUser().getId()) {
+            model.addAttribute("vetClaimedClinic", true);
+        }
         model.addAttribute("claim", claim);
         model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
 

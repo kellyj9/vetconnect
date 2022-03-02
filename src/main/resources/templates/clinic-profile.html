@@ -24,7 +24,7 @@
       <div class="bg-success text-white font-weight-bold rounded px-3 py-1" >Claim Pending</div>
     </div>
 
-    <div th:if="${(claim != null) and (claim.status == 'approved') and (userId == claim.user.getId())}" class="position-absolute top-0 start-0 m-2" th:classappend="${claimedTag}">
+    <div th:if="${(claim != null) and (claim.status == 'approved') and (vetClaimedClinic)}" class="position-absolute top-0 start-0 m-2" th:classappend="${claimedTag}">
       <a th:href="@{/edit-a-clinic(clinicId=${claim.clinic.id})}"><div class="btn btn-primary text-white font-weight-bold rounded px-3 py-1" >Edit Clinic Details</div></a>
     </div>
 
