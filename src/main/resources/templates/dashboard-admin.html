@@ -54,10 +54,10 @@
     <p th:if="${viewType} == 'requests'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Add a clinic : ' + ${totalItems} + ' total'"></p>
     <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Claim a clinic : ' + ${totalItems} + ' total'"></p>
 
-    <div th:if="${totalItems > 0}" class="bg-light p-1 position-absolute m-2 sortButton">
+    <div th:if="${totalItems > 0}" class=" p-1 position-absolute m-2 sortButton">
         <a th:href="@{'/dashboard-admin/page/' + ${currentPage}  + '?viewType=' + ${viewType} + '&filter=' + ${filter} + '&sortDir=' + ${reverseSortDir}}">
-            <i th:if="${reverseSortDir == 'asc'}" class="fa fa-2x fa-arrow-up"></i>
-            <i th:if="${reverseSortDir == 'desc'}" class="fa fa-2x fa-arrow-down"></i>
+            <i th:if="${reverseSortDir == 'asc'}" class="fa fa-2x fa-arrow-up text-light"></i>
+            <i th:if="${reverseSortDir == 'desc'}" class="fa fa-2x fa-arrow-down text-light"></i>
         </a>
     </div>
 </div>
