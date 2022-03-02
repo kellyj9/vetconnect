@@ -24,6 +24,10 @@
       <div class="bg-success text-white font-weight-bold rounded px-3 py-1" >Claim Pending</div>
     </div>
 
+    <div th:if="${(claim != null) and (claim.status == 'approved') and (userId == claim.user.getId())}" class="position-absolute top-0 start-0 m-2" th:classappend="${claimedTag}">
+      <a th:href="@{/edit-a-clinic(clinicId=${claim.clinic.id})}"><div class="btn btn-primary text-white font-weight-bold rounded px-3 py-1" >Edit Clinic Details</div></a>
+    </div>
+
     <section class="d-flex flex-column align-items-center justify-content-center text-center">
       <p class="clinicLabel">Clinic Name</p>
       <h2 class="display-5" th:text="${clinic.name}"></h2>
