@@ -255,15 +255,4 @@ public class DashboardController extends VetConnectController{
         }
         return "redirect:dashboard-admin/page/1?viewType=claims&filter=" + filter;
     }
-
-    @GetMapping(value="dashboard-admin")
-    public String displayDashboardAdmin(Model model, HttpServletRequest request) {
-        User this_user = getUserFromSession(request.getSession(false));
-        if (!this_user.getUserType().equals("admin")) {
-            return "redirect:error";
-        }
-      //  model.addAttribute("requests", this_user.getRequests());
-      //  model.addAttribute("filter", filter);
-        return "dashboard-admin";
-    }
 }
