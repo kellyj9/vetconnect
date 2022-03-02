@@ -147,3 +147,8 @@ a {
 .fa-location-arrow:hover {
     opacity: .75;
 }
+
+.sortButton {
+    bottom: -70px;
+    right: 10px;
+}
