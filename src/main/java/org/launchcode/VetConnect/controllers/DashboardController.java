@@ -141,17 +141,14 @@ public class DashboardController extends VetConnectController{
             filter = "pending";
         }
         int pageSize = 3; // number of records on page
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
         if (viewType.equals("requests")) {
             List<Request> requests;
             Page<Request> page;
             if (filter.equals("all")) {
-                Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
                 page = requestRepository.findAll(pageable);
-            } else if (filter.equals("pending")) {
-                Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-                page = requestRepository.findAllByStatus(filter, pageable);
             } else {
-                Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
                 page = requestRepository.findAllByStatus(filter, pageable);
             }
             requests = page.getContent();
@@ -164,13 +161,8 @@ public class DashboardController extends VetConnectController{
             List<Claim> claims;
             Page<Claim> page;
             if (filter.equals("all")) {
-                Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
                 page = (Page<Claim>) claimRepository.findAll(pageable);
-            } else if (filter.equals("pending")){
-                Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-                page = claimRepository.findAllByStatus(filter, pageable);
             } else {
-                Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
                 page = claimRepository.findAllByStatus(filter, pageable);
             }
             claims = page.getContent();
