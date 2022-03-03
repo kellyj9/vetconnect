@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -125,9 +126,11 @@ public class DashboardController extends VetConnectController{
     }
 
     @GetMapping(value="dashboard-admin/page/{pageNo}")
-    public String displayDashboardAdmin(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String viewType, @RequestParam(required = false) String filter) {
+    public String displayDashboardAdmin(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String viewType, @RequestParam(required = false) String filter, @RequestParam(required = false, defaultValue = "desc") String sortDir) {
         User this_user = getUserFromSession(request.getSession(false));
         String userType = this_user.getUserType();
+        Sort sort = sortDir.equals("asc")  ? Sort.by("createdTimestamp").ascending() : Sort.by("createdTimestamp").descending() ;
+
         if (!(userType.equals("admin"))) {
             return "redirect:error";
         }
@@ -138,7 +141,8 @@ public class DashboardController extends VetConnectController{
             filter = "pending";
         }
         int pageSize = 3; // number of records on page
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
         if (viewType.equals("requests")) {
             List<Request> requests;
             Page<Request> page;
@@ -167,6 +171,10 @@ public class DashboardController extends VetConnectController{
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("totalItems", page.getTotalElements());
         }
+
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("viewType", viewType);
         model.addAttribute("filter", filter);
         model.addAttribute("userType", userType);

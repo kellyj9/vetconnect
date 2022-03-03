@@ -66,12 +66,6 @@ public class ClinicController extends VetConnectController {
             return "add-a-clinic";
         }
 
-        if(user.getUserType() == "vet") {
-            newRequest.setClaimed("1");
-        } else {
-            newRequest.setClaimed("0");
-        }
-
         newRequest.setUser(user);
         newRequest.setStatus("Pending");
         newRequest.setPhoneNumber(newRequest.getPhoneNumber().replaceAll("[^0-9]",""));
@@ -115,8 +109,6 @@ public class ClinicController extends VetConnectController {
         if(optionalClinic.isPresent()) {
             Clinic tempClinic = optionalClinic.get();
 
-            System.out.println(clinic.getEmergency());
-            tempClinic.setEmergency(clinic.getEmergency());
             tempClinic.setName(clinic.getName());
             tempClinic.setAddress(clinic.getAddress());
             tempClinic.setState(clinic.getState());
@@ -124,6 +116,7 @@ public class ClinicController extends VetConnectController {
             tempClinic.setZip(clinic.getZip());
             tempClinic.setWebsite(clinic.getWebsite());
             tempClinic.setPhoneNumber(clinic.getPhoneNumber());
+            tempClinic.setEmergency(clinic.getEmergency());
 
             clinicRepository.save(tempClinic);
 
