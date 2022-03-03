@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +38,7 @@ public class DashboardController extends VetConnectController{
     public String getDashboard(Model model, HttpServletRequest request) {
         User user = getUserFromSession(request.getSession(false));
         if (user.getUserType().equals("petOwner")) {
-            return "redirect:dashboard-pet-owner";
+            return "redirect:dashboard-pet-owner/page/1";
         }
         else if (user.getUserType().equals("vet")) {
                 return "redirect:dashboard-vet/page/1";
@@ -52,21 +51,33 @@ public class DashboardController extends VetConnectController{
         }
     }
 
-    @GetMapping(value="dashboard-pet-owner")
-    public String displayDashboardPetOwner(Model model, HttpServletRequest request, @RequestParam(required = false) String filter) {
+    @GetMapping(value="dashboard-pet-owner/page/{pageNo}")
+    public String displayDashboardPetOwner(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String filter) {
         User this_user = getUserFromSession(request.getSession(false));
         String userType = this_user.getUserType();
         if (!(userType.equals("petOwner"))) {
             return "redirect:error";
         }
-        List<Request> filteredRequests = new ArrayList<>();
-        if(filter == null || filter.equals("all")) {
-            filteredRequests = requestRepository.findByUserId(this_user.getId());
-
-        } else {
-            filteredRequests = requestRepository.findByUserIdAndStatus(this_user.getId(), filter);
+        Long thisUserId = this_user.getId();
+        if (filter == null) {
+            filter = "all";
         }
-        model.addAttribute("requests", filteredRequests);
+        int pageSize = 3; // number of records on page
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Request> requests;
+        Page<Request> page;
+        if (filter.equals("all")) {
+            page = requestRepository.findAllByUserId(thisUserId, pageable);
+        } else {
+            // next two lines can edited in the future if string 'status' is changed to lowercase in db records
+            String cap = filter.substring(0, 1).toUpperCase() + filter.substring(1);
+            page = requestRepository.findAllByUserIdAndStatus(thisUserId, cap, pageable);
+        }
+        requests = page.getContent();
+        model.addAttribute("requests", requests);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("filter", filter);
         model.addAttribute("userType", userType);
         return "dashboard-pet-owner";
