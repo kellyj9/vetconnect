@@ -16,7 +16,7 @@
 <div class="container">
     <th:block th:each="clinic : ${clinics}">
         <div class="bg-light px-3 pt-2 pb-1 my-3 rounded position-relative">
-            <div class="position-absolute top-0 end-0 px-3 py-1 m-3 bg-danger text-white font-weight-bold rounded" th:if="${clinic.emergency == '1'}">Open 24 Hours</div>
+            <div class="position-absolute top-0 end-0 px-3 py-1 m-3 bg-danger text-white font-weight-bold rounded" th:if="${clinic.emergency}">Open 24 Hours</div>
             <table class="table table-sm table-light table-borderless">
                 <tr>
                     <td> <h3><a class="" th:href="@{/clinic-profile(clinicId=${clinic.id})}" th:text="${clinic.name}"></a></h3> </td>

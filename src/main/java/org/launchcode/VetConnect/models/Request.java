@@ -39,7 +39,7 @@ public class Request extends AbstractEntity {
     @NotBlank(message = "Website required")
     private String website;
 
-    private String emergency;
+    private boolean emergency;
 
     private String status;
 
@@ -56,7 +56,7 @@ public class Request extends AbstractEntity {
 
     public Request() {};
 
-    public Request(String name, String address, String city, String state, String zip, String phoneNumber, String website, String emergency, String status, User user, String claimed) {
+    public Request(String name, String address, String city, String state, String zip, String phoneNumber, String website, boolean emergency, String status, User user, String claimed) {
         this.name = name;
         this.address = address;
         this.city = city;
@@ -144,11 +144,11 @@ public class Request extends AbstractEntity {
         this.website = website;
     }
 
-    public String getEmergency() {
+    public boolean getEmergency() {
         return emergency;
     }
 
-    public void setEmergency(String emergency) {
+    public void setEmergency(boolean emergency) {
         this.emergency = emergency;
     }
 
