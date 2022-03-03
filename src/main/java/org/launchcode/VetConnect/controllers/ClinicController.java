@@ -113,17 +113,25 @@ public class ClinicController extends VetConnectController {
         if(errors.hasErrors()) {
             return "edit-a-clinic";
         }
-        Optional<Clinic> clinicFromDB = clinicRepository.findById(clinicId);
+        Optional<Clinic> optionalClinic = clinicRepository.findById(clinicId);
 
+        if(optionalClinic.isPresent()) {
+            Clinic tempClinic = optionalClinic.get();
 
-        clinicFromDB.get().setName(clinic.getName());
-        clinicFromDB.get().setAddress(clinic.getAddress());
-        clinicFromDB.get().setState(clinic.getState());
-        clinicFromDB.get().setCity(clinic.getCity());
-        clinicFromDB.get().setZip(clinic.getZip());
-        clinicFromDB.get().setWebsite(clinic.getWebsite());
+            tempClinic.setName(clinic.getName());
+            tempClinic.setAddress(clinic.getAddress());
+            tempClinic.setState(clinic.getState());
+            tempClinic.setCity(clinic.getCity());
+            tempClinic.setZip(clinic.getZip());
+            tempClinic.setWebsite(clinic.getWebsite());
+            tempClinic.setPhoneNumber(clinic.getPhoneNumber());
+            tempClinic.setEmergency(clinic.getEmergency());
 
-        clinicRepository.save(clinicFromDB.get());
+            clinicRepository.save(tempClinic);
+
+        } else {
+            return "redirect:error";
+        }
 
         return "redirect:dashboard";
     }

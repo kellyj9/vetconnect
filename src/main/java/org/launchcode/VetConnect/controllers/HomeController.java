@@ -23,9 +23,6 @@ import javax.validation.Valid;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HomeController extends VetConnectController {
@@ -108,6 +105,9 @@ public class HomeController extends VetConnectController {
             model.addAttribute("clinic", clinic.get());
         }
 
+        if(user.getId() == claim.getUser().getId()) {
+            model.addAttribute("vetClaimedClinic", true);
+        }
         model.addAttribute("claim", claim);
         model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
 
