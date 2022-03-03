@@ -41,7 +41,7 @@ public class Clinic extends AbstractEntity{
     @NotBlank(message = "Website required")
     private String website;
 
-    private boolean emergency;
+    private Boolean emergency;
 
     @OneToMany(mappedBy = "clinic")
     private final List<Review> reviews = new ArrayList<>();

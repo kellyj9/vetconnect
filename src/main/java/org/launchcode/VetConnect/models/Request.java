@@ -38,7 +38,7 @@ public class Request extends AbstractEntity {
     @NotBlank(message = "Website required")
     private String website;
 
-    private boolean emergency;
+    private Boolean emergency;
 
     private String status;
 

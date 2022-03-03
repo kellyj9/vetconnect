@@ -45,6 +45,7 @@ public class HomeController extends VetConnectController {
     @GetMapping(value="search-results")
     public String displaySearchResults(Model model, @RequestParam String term, @RequestParam(required = false) String emergency)
     {
+        System.out.println(emergency);
         if (term.isEmpty())
         {
             model.addAttribute("results_heading", "No search results were found.  Please enter a search term.");
@@ -52,11 +53,12 @@ public class HomeController extends VetConnectController {
         else
         {
             List<Clinic> results = new ArrayList<>();
-            if (!(emergency == null)){
-                results = ClinicData.findClinic(term, clinicRepository.findAllByEmergency(true));
+
+            if ((emergency == null)){
+                results = ClinicData.findClinic(term, clinicRepository.findAll());
             }
             else {
-                results = ClinicData.findClinic(term, clinicRepository.findAll());
+                results = ClinicData.findClinic(term, clinicRepository.findAllByEmergency(true));
             }
 
             if (results.isEmpty()) {
