@@ -32,7 +32,7 @@ public class HomeController extends VetConnectController {
 
     @Autowired
     private ClaimRepository claimRepository;
-  
+
     @Autowired
     private ReviewRepository reviewRepository;
 
@@ -76,8 +76,8 @@ public class HomeController extends VetConnectController {
     {
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
         User user = getUserFromSession(request.getSession(false));
-        Claim claim = claimRepository.findByClinicId(clinicId);
-
+        Claim claimPending = claimRepository.findByClinicIdAndStatus(clinicId, "pending" );
+        Claim claimApproved = claimRepository.findByClinicIdAndStatus(clinicId, "approved" );
 
         if(clinic.isPresent()) {
             List<Review> reviews = clinic.get().getReviews();
@@ -105,10 +105,19 @@ public class HomeController extends VetConnectController {
             model.addAttribute("clinic", clinic.get());
         }
 
-        if(user.getId() == claim.getUser().getId()) {
-            model.addAttribute("vetClaimedClinic", true);
+        if(claimApproved != null) {
+            model.addAttribute("claimApproved", true);
+
+            if(user != null && user.getId() == claimApproved.getUser().getId()) {
+                model.addAttribute("vetClaimedClinic", true);
+            }
+        } else if (claimPending != null) {
+            model.addAttribute("claimPending", true);
+        } else {
+            model.addAttribute("noClaim", true);
+
         }
-        model.addAttribute("claim", claim);
+
         model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
 
         return "clinic-profile";
