@@ -53,7 +53,7 @@ public class HomeController extends VetConnectController {
         {
             List<Clinic> results = new ArrayList<>();
             if (!(emergency == null)){
-                results = ClinicData.findClinic(term, clinicRepository.findAllByEmergency("1"));
+                results = ClinicData.findClinic(term, clinicRepository.findAllByEmergency(true));
             }
             else {
                 results = ClinicData.findClinic(term, clinicRepository.findAll());
