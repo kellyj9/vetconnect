@@ -266,5 +266,4 @@ public class DashboardController extends VetConnectController{
         }
         return "redirect:dashboard-admin/page/1?viewType=claims&filter=" + filter;
     }
-
 }
