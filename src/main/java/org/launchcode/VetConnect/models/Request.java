@@ -5,7 +5,6 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -43,11 +42,6 @@ public class Request extends AbstractEntity {
 
     private String status;
 
-    private String claimed;
-
-    @OneToOne
-    private Clinic clinic;
-
     @ManyToOne
     private User user;
 
@@ -67,7 +61,6 @@ public class Request extends AbstractEntity {
         this.emergency = emergency;
         this.status = status;
         this.user = user;
-        this.claimed = claimed;
     }
 
     public User getUser() {
@@ -76,14 +69,6 @@ public class Request extends AbstractEntity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Clinic getClinic() {
-        return clinic;
-    }
-
-    public void setClinic(Clinic clinic) {
-        this.clinic = clinic;
     }
 
     public String getName() {
@@ -166,13 +151,5 @@ public class Request extends AbstractEntity {
 
     public void setCreatedTimestamp(Date createdTimestamp) {
         this.createdTimestamp = createdTimestamp;
-    }
-
-    public String getClaimed() {
-        return claimed;
-    }
-
-    public void setClaimed(String claimed) {
-        this.claimed = claimed;
     }
 }
