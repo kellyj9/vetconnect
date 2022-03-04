@@ -53,9 +53,11 @@ public class DashboardController extends VetConnectController{
     }
 
     @GetMapping(value="dashboard-pet-owner/page/{pageNo}")
-    public String displayDashboardPetOwner(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String filter) {
+    public String displayDashboardPetOwner(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String filter, @RequestParam(required = false, defaultValue = "desc") String sortDir) {
         User this_user = getUserFromSession(request.getSession(false));
         String userType = this_user.getUserType();
+        Sort sort = sortDir.equals("asc")  ? Sort.by("createdTimestamp").ascending() : Sort.by("createdTimestamp").descending() ;
+
         if (!(userType.equals("petOwner"))) {
             return "redirect:error";
         }
@@ -64,7 +66,7 @@ public class DashboardController extends VetConnectController{
             filter = "all";
         }
         int pageSize = 3; // number of records on page
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         List<Request> requests;
         Page<Request> page;
         if (filter.equals("all")) {
@@ -75,6 +77,8 @@ public class DashboardController extends VetConnectController{
             page = requestRepository.findAllByUserIdAndStatus(thisUserId, cap, pageable);
         }
         requests = page.getContent();
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         model.addAttribute("requests", requests);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
@@ -101,7 +105,8 @@ public class DashboardController extends VetConnectController{
             filter = "approved";
         }
         int pageSize = 3; // number of records on page
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
         if (viewType.equals("requests")) {
             List<Request> requests;
             Page<Request> page;
@@ -132,6 +137,10 @@ public class DashboardController extends VetConnectController{
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("totalItems", page.getTotalElements());
         }
+
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("viewType", viewType);
         model.addAttribute("filter", filter);
         model.addAttribute("userType", userType);
