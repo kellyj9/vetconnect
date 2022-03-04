@@ -49,7 +49,7 @@ public class Clinic extends AbstractEntity{
     public Clinic() {}
 
 //    Initialize the id and value fields
-    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, boolean emergency) {
+    public Clinic(String name, String phoneNumber, String address, String city, String state, String zip, String website, Boolean emergency) {
         super();
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -120,11 +120,11 @@ public class Clinic extends AbstractEntity{
         this.website = website;
     }
 
-    public boolean getEmergency() {
+    public Boolean getEmergency() {
         return emergency;
     }
 
-    public void setEmergency(boolean emergency) {
+    public void setEmergency(Boolean emergency) {
         this.emergency = emergency;
     }
 

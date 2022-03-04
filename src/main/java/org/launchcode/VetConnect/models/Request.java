@@ -50,7 +50,7 @@ public class Request extends AbstractEntity {
 
     public Request() {};
 
-    public Request(String name, String address, String city, String state, String zip, String phoneNumber, String website, boolean emergency, String status, User user, String claimed) {
+    public Request(String name, String address, String city, String state, String zip, String phoneNumber, String website, Boolean emergency, String status, User user, String claimed) {
         this.name = name;
         this.address = address;
         this.city = city;
@@ -129,11 +129,11 @@ public class Request extends AbstractEntity {
         this.website = website;
     }
 
-    public boolean getEmergency() {
+    public Boolean getEmergency() {
         return emergency;
     }
 
-    public void setEmergency(boolean emergency) {
+    public void setEmergency(Boolean emergency) {
         this.emergency = emergency;
     }
 
