@@ -66,15 +66,10 @@ public class ClinicController extends VetConnectController {
             return "add-a-clinic";
         }
 
-        if (newRequest.getEmergency() != null) {
-            newRequest.setEmergency("1");
-        } else {
-            newRequest.setEmergency("0");
-        }
-
         newRequest.setUser(user);
         newRequest.setStatus("Pending");
         newRequest.setPhoneNumber(newRequest.getPhoneNumber().replaceAll("[^0-9]",""));
+
 
         newRequest.setWebsite(newRequest.getWebsite().replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)",""));
 
@@ -88,11 +83,15 @@ public class ClinicController extends VetConnectController {
     public String editClinicForm(Model model, HttpServletRequest request, @RequestParam Long clinicId) {
         User user = getUserFromSession(request.getSession(false));
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
-        Claim claim = claimRepository.findByClinicId(clinicId);
+        Claim claim = claimRepository.findByClinicIdAndStatus(clinicId, "approved");
 
 
-        if(user == null || (user.getId() != claimRepository.findByClinicId(clinicId).getUser().getId())) {
+        if(user == null || claim == null || (user.getId() != claim.getUser().getId())) {
             return "redirect:dashboard";
+        }
+
+        if(!clinic.isPresent()) {
+            return "redirect:error";
         }
 
         model.addAttribute("clinic", clinic.get());

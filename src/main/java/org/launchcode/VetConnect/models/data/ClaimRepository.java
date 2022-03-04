@@ -15,6 +15,7 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
     Page<Claim> findAllByUserId(Long userId, Pageable pageable);
     Page<Claim> findAllByStatus(String status, Pageable pageable);
     Page<Claim> findAllByUserIdAndStatus(Long userId, String status, Pageable pageable);
+    Page<Claim> findAll(Pageable pageable);
+    Claim findByClinicIdAndStatus(Long clinicId, String status);
     Claim findByClinicId(Long clinicId);
-
 }
