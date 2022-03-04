@@ -43,8 +43,15 @@
     </div>
 </div>
 <!-- END FILTER FORM -->
-<div class="container">
+<div class="container position-relative">
     <p class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Add a clinic : ' + ${totalItems} + ' total'"></p>
+
+    <div th:if="${totalItems > 1}" class=" p-1 position-absolute m-2 sortButton">
+        <a th:href="@{'/dashboard-pet-owner/page/' + ${currentPage}  + '?filter=' + ${filter} + '&sortDir=' + ${reverseSortDir}}">
+            <i th:if="${reverseSortDir == 'asc'}" class="fa fa-2x fa-arrow-up text-light"></i>
+            <i th:if="${reverseSortDir == 'desc'}" class="fa fa-2x fa-arrow-down text-light"></i>
+        </a>
+    </div>
 </div>
 <div th:replace="fragments :: dashboard-pagination"></div>
 <div th:replace="fragments :: requests"></div>
