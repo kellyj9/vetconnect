@@ -85,9 +85,11 @@ public class DashboardController extends VetConnectController{
     }
 
     @GetMapping(value="dashboard-vet/page/{pageNo}")
-    public String displayDashboardVet(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String viewType, @RequestParam(required = false) String filter) {
+    public String displayDashboardVet(Model model, HttpServletRequest request, @PathVariable(value = "pageNo") int pageNo, @RequestParam(required = false) String viewType, @RequestParam(required = false) String filter, @RequestParam(required = false, defaultValue = "desc") String sortDir) {
         User this_user = getUserFromSession(request.getSession(false));
         String userType = this_user.getUserType();
+        Sort sort = sortDir.equals("asc")  ? Sort.by("createdTimestamp").ascending() : Sort.by("createdTimestamp").descending() ;
+
         if (!(userType.equals("vet"))) {
             return "redirect:error";
         }
