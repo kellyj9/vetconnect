@@ -79,10 +79,10 @@ public class HomeController extends VetConnectController {
         User user = getUserFromSession(request.getSession(false));
         Claim claimPending = claimRepository.findByClinicIdAndStatus(clinicId, "pending" );
         Claim claimApproved = claimRepository.findByClinicIdAndStatus(clinicId, "approved" );
+        String clinicWebsite;
 
         if(clinic.isPresent()) {
             List<Review> reviews = clinic.get().getReviews();
-
 
             if(!(reviews.isEmpty())) {
                 DecimalFormat df = new DecimalFormat("#.##");
@@ -91,7 +91,6 @@ public class HomeController extends VetConnectController {
                 OptionalDouble average = reviews.stream().mapToDouble(a -> a.getReviewRating()).average();
                 model.addAttribute("average", df.format(average.getAsDouble()));
                 model.addAttribute("totalReviews", reviews.size());
-
             }
 
             if(!(user == null)) {
@@ -119,7 +118,9 @@ public class HomeController extends VetConnectController {
 
         }
 
-        model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
+        clinicWebsite = clinic.get().getWebsite().replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)","");
+        model.addAttribute("clinic", clinic.get());
+        model.addAttribute("clinicWebsite", "http://www." + clinicWebsite );
 
         return "clinic-profile";
     }

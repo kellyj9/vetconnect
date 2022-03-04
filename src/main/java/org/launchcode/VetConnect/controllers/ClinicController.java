@@ -118,6 +118,8 @@ public class ClinicController extends VetConnectController {
             tempClinic.setPhoneNumber(clinic.getPhoneNumber());
             tempClinic.setEmergency(clinic.getEmergency());
 
+            tempClinic.setWebsite(clinic.getWebsite().replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)",""));
+
             clinicRepository.save(tempClinic);
 
         } else {
