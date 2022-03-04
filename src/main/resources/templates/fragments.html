@@ -174,7 +174,7 @@
                     </tr>
                     <tr>
                         <th class="shrink">Open 24 hours? </th>
-                        <td class="expand" th:text="${request.emergency} == '1' ? 'Yes' : 'No'"></td>
+                        <td class="expand" th:text="${request.emergency} ? 'Yes' : 'No'"></td>
                     </tr>
                 </table>
             </div>

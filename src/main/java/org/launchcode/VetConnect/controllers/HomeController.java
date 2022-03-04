@@ -32,7 +32,7 @@ public class HomeController extends VetConnectController {
 
     @Autowired
     private ClaimRepository claimRepository;
-  
+
     @Autowired
     private ReviewRepository reviewRepository;
 
@@ -52,11 +52,12 @@ public class HomeController extends VetConnectController {
         else
         {
             List<Clinic> results = new ArrayList<>();
-            if (!(emergency == null)){
-                results = ClinicData.findClinic(term, clinicRepository.findAllByEmergency("1"));
+
+            if ((emergency == null)){
+                results = ClinicData.findClinic(term, clinicRepository.findAll());
             }
             else {
-                results = ClinicData.findClinic(term, clinicRepository.findAll());
+                results = ClinicData.findClinic(term, clinicRepository.findAllByEmergency(true));
             }
 
             if (results.isEmpty()) {
@@ -76,8 +77,8 @@ public class HomeController extends VetConnectController {
     {
         Optional<Clinic> clinic = clinicRepository.findById(clinicId);
         User user = getUserFromSession(request.getSession(false));
-        Claim claim = claimRepository.findByClinicId(clinicId);
-
+        Claim claimPending = claimRepository.findByClinicIdAndStatus(clinicId, "pending" );
+        Claim claimApproved = claimRepository.findByClinicIdAndStatus(clinicId, "approved" );
 
         if(clinic.isPresent()) {
             List<Review> reviews = clinic.get().getReviews();
@@ -105,10 +106,19 @@ public class HomeController extends VetConnectController {
             model.addAttribute("clinic", clinic.get());
         }
 
-        if(user.getId() == claim.getUser().getId()) {
-            model.addAttribute("vetClaimedClinic", true);
+        if(claimApproved != null) {
+            model.addAttribute("claimApproved", true);
+
+            if(user != null && user.getId() == claimApproved.getUser().getId()) {
+                model.addAttribute("vetClaimedClinic", true);
+            }
+        } else if (claimPending != null) {
+            model.addAttribute("claimPending", true);
+        } else {
+            model.addAttribute("noClaim", true);
+
         }
-        model.addAttribute("claim", claim);
+
         model.addAttribute("clinic", clinicRepository.findById(clinicId).get());
 
         return "clinic-profile";
