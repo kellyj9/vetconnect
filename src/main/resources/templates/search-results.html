@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<nav th:replace="fragments :: nav-top"></nav>
+
+<header>
+    <h1>Search Results</h1>
+    <p th:if="${results_heading}" th:text="${results_heading}"></p>
+</header>
+<div th:if="${!session.isEmpty()}" class="container  mb-3">
+    <Strong>Don't see your clinic in these search results? </Strong>
+    <a th:href="@{/add-a-clinic}" th:text="'Add a Clinic!'" class="btn btn-primary btn-md" role="button"></a>
+</div>
+<div class="container">
+    <th:block th:each="clinic : ${clinics}">
+        <div class="bg-light px-3 pt-2 pb-1 my-3 rounded position-relative">
+            <div class="position-absolute top-0 end-0 px-3 py-1 m-3 bg-danger text-white font-weight-bold rounded" th:if="${clinic.emergency}">Open 24 Hours</div>
+            <table class="table table-sm table-light table-borderless">
+                <tr>
+                    <td> <h3><a class="" th:href="@{/clinic-profile(clinicId=${clinic.id})}" th:text="${clinic.name}"></a></h3> </td>
+                </tr>
+                <tr>
+                    <td th:text="${clinic.address} + ' ' + ${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></td>
+                </tr>
+            </table>
+        </div>
+    </th:block>
+</div>
+
+</body>
+</html>

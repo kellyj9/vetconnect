@@ -1,0 +1,156 @@
+body {
+    background-color: #cae4fd;
+}
+
+nav {
+    background-color: #2d4b66;
+}
+
+header {
+    padding: 10px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+table th.shrink {
+    white-space: nowrap;
+}
+
+table th.expand {
+    width: 99%;
+}
+
+table td.shrink {
+    white-space: nowrap;
+}
+
+table td.expand {
+    width: 99%;
+}
+
+/* Bootstrap modification */
+.navbar-brand {
+    font-size: x-large;
+    padding: 0px;
+}
+
+.nav-pagination {
+    background-color: #cae4fd;
+}
+
+.div-search {
+    max-width: 485px;
+    margin: 0 auto;
+}
+
+.row-images {
+    max-width: 750px;
+    padding: 30px 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.btn-find {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.cprofile {
+   background-color: white;
+   border-radius: 10px;
+   max-width: 90%;
+}
+
+.clinicLabel {
+    margin-bottom: 0;
+    font-style: italic;
+    color: rgb(149, 165, 166);
+
+}
+
+.user-type:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.pending {
+    background-color: rgb(255, 255, 153, 0.75)!important;
+}
+
+.approved {
+    background-color: rgb(178, 255, 153, .75)!important;
+}
+
+.declined {
+    background-color: rgb(255, 153, 153, .75)!important;
+}
+
+.request-heading {
+    font-size: 2rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.checked {
+  color: orange;
+}
+
+.rating_star {
+   cursor: pointer;
+}
+
+.claimedTag {
+  display: inline-block;
+   position: relative;
+   background-color: red;
+   color: white;
+   padding: .25em .5em;
+   font-weight: bold;
+   border-radius: 5px;
+}
+
+.claimedTagContent {
+    width: 150px;
+    left: -50%;
+    padding: 1em;
+    color: black;
+    display: none;
+    z-index: 1;
+    position: absolute;
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    overflow-wrap: break-word;
+    font-weight: normal;
+}
+
+.claimedTag:hover .claimedTagContent { display: block; }
+
+.fa-location-arrow {
+    color: blue;
+    cursor: pointer;
+
+}
+.fa-location-arrow:hover {
+    opacity: .75;
+}
+
+.sortButton {
+    right: 5px;
+    top: -10px;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
