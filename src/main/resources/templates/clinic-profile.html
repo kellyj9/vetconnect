@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: nav-top"></nav>
+<header >
+</header>
+
+
+<div class="cprofile m-auto position-relative d-flex flex-column">
+  <section class="d-flex flex-wrap align-items-center justify-content-around p-2">
+
+
+    <div th:if="${(claimApproved)}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}"  >
+      <div class="bg-success text-white font-weight-bold rounded px-3 py-1" >Claimed</div>
+      <div class="claimedTagContent">This tag indicates the vet that operates this practice has verified this information and claimed this clinic.</div>
+    </div>
+
+    <div th:if="${(userType == 'vet') and (noClaim != null)}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}">
+      <a class="btn btn-primary" th:href="@{/claim-request(clinicId=${clinic.id})}">Claim this clinic</a>
+    </div>
+
+    <div th:if="${(claimPending != null) and (userType == 'vet')}" class="position-absolute top-0 end-0 m-2" th:classappend="${claimedTag}">
+      <div class="bg-success text-white font-weight-bold rounded px-3 py-1" >Claim Pending</div>
+    </div>
+
+    <div th:if="${(claimApproved != null) and (vetClaimedClinic != null)}" class="position-absolute top-0 start-0 m-2" th:classappend="${claimedTag}">
+      <a th:href="@{/edit-a-clinic(clinicId=${clinic.id})}"><div class="btn btn-primary text-white font-weight-bold rounded px-3 py-1" >Edit Clinic Details</div></a>
+    </div>
+
+    <section class="d-flex flex-column align-items-center justify-content-center text-center">
+      <p class="clinicLabel">Clinic Name</p>
+      <h2 class="display-5" th:text="${clinic.name}"></h2>
+      <p class="clinicLabel">Address</p>
+      <div>
+        <p class="mb-1 fs-6" th:text="${clinic.address}"></p>
+        <p class="fs-6" th:text="${clinic.city} + ', ' + ${clinic.state} + ' ' + ${clinic.zip}"></p>
+      </div>
+      <p class="clinicLabel">Phone Number</p>
+      <p class="fs-6" th:text="${clinic.phoneNumberToString()}"></p>
+      <p class="clinicLabel">Website</p>
+      <a th:href="@{${clinicWebsite}}">
+        <p class="fs-6" th:text="${clinicWebsite}"></p>
+      </a>
+    </section>
+
+    <section class="d-flex flex-column align-items-center justify-content-center p-2">
+        <a th:href="@{'https://maps.google.com/?q=' + ' ' + ${clinic.address} + ' ' + ${clinic.city} + ' ' + ${clinic.state} + ' ' + ${clinic.zip}}">
+          <img th:src="@{'https://maps.googleapis.com/maps/api/staticmap?center=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&markers=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&zoom=12&size=400x400&key=AIzaSyCjFOLSO6Os1tn4eSNktZ_tyKEm6yWUHh4'}">
+        </a>
+    </section>
+  </section>
+
+    <section class="d-flex flex-column align-items-start mx-3 mt-2 py-1">
+      <div class="d-flex align-items-center mt-2 py-1">
+        <h3 class="mb-0">Reviews</h3>
+        <div th:if="${!(average == null)}"class="mx-2 d-flex align-items-stretch">
+          <label class="fa fa-star fa-2x checked" ></label>
+          <label class="fa fa-star fa-2x" th:classappend="${average} >= 2 ? 'checked' : ''"></label>
+          <label class="fa fa-star fa-2x" th:classappend="${average} >= 3 ? 'checked' : ''"></label>
+          <label class="fa fa-star fa-2x" th:classappend="${average} >= 4 ? 'checked' : ''"></label>
+          <label class="fa fa-star fa-2x" th:classappend="${average} >= 5 ? 'checked' : ''"></label>
+        </div>
+        <div class="mx-2" th:text="${!(average == null)} ? '(' + ${average} + ') from ' + ${totalReviews} + ' review(s)' : ''"></div>
+      </div>
+      <div th:if="${!session.isEmpty()} and ${!(review == null)}"><div th:replace="fragments :: add-review"></div></div>
+      <div  class="fst-italic" th:text="${clinic.getReviews().isEmpty()} ? 'No Reviews Yet' : ''"></div>
+      <div class="d-flex justify-content-start mt-3 text-start" th:each="review : ${clinic.getReviews()}">
+        <section class="d-flex justify-content-start flex-column py-2">
+          <p class="mb-0 fw-bold " th:text="${review.user.firstName}"></p>
+          <div class="d-flex justify-content-start align-items-center ">
+            <label class="fa fa-star checked" ></label>
+            <label class="fa fa-star" th:classappend="${review.reviewRating} >= 2 ? 'checked' : ''"></label>
+            <label class="fa fa-star" th:classappend="${review.reviewRating} >= 3 ? 'checked' : ''"></label>
+            <label class="fa fa-star" th:classappend="${review.reviewRating} >= 4 ? 'checked' : ''"></label>
+            <label class="fa fa-star" th:classappend="${review.reviewRating} >= 5 ? 'checked' : ''"></label>
+            <p class="mb-0 mx-1" th:text="${#dates.format(review.createdTimestamp, 'MMMM dd, yyyy')}"></p>
+          </div>
+          <div class="font-italic" th:if=${!review.reviewText.isEmpty()} th:text="${'&quot' + review.reviewText + '&quot'}"></div>
+        </section>
+      </div>
+    </section>
+
+</div>
+
+
+</body>
+</html>

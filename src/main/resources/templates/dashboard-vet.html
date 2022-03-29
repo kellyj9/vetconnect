@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+
+<nav th:replace="fragments :: nav-top"></nav>
+<header><h1>My Dashboard</h1></header>
+    <div th:replace="fragments :: add-clinic-instructions"></div>
+    <div th:fragment="claim-clinic-instructions" class="container mb-3">
+        <div class="accordion accordion-flush" id="accordionAddClinic">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                        <strong>How to claim a clinic</strong>
+                    </button>
+                </h3>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionAddClinic">
+                    <div class="accordion-body">
+                        <p>
+                            <strong>Step 1: </strong>Search for the clinic in the VetConnect listing.
+                        </p>
+                        <p>
+                            <strong>Step 2: </strong> Select the "Claim this clinic" button on the top-right of the profile. If the clinic is not in the search results, click the button to <a href="/add-a-clinic">'Add a Clinic'</a> </p>
+                        <p>
+                            <strong>Step 3: </strong>Allow 7-10 business days for us to review your submission.
+                        </p>
+                        <p>
+                            <strong>Step 4: </strong> You will then be able to visit the clinic profile and claim the clinic.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- START FILTER FORM -->
+<div class="container g-6">
+    <div class="d-inline-flex flex-row p-3 border border-secondary border-1 rounded">
+        <form method="GET" th:action="@{/dashboard-vet/page/1}">
+            <div class="d-inline-flex flex-column me-2">
+                <select class="form-select" name="viewType" aria-label="Select view type">
+                    <option th:value="'requests'" th:text="'Vew Add a Clinic requests'" th:selected="${viewType} == 'requests'"></option>
+                    <option th:value="'claims'" th:text="'View Claim requests'" th:selected="${viewType} == 'claims'"></option>
+                </select>
+            </div>
+            <div class="d-inline-flex flex-row align-items-center">
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="pending" id="pendingCheck2"  th:checked="${filter == null || filter == 'pending'}">
+                    <label class="form-check-label" for="pendingCheck2">
+                        Pending
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="approved" id="approvedCheck2" th:checked="${filter == 'approved'}">
+                    <label class="form-check-label" for="approvedCheck2">
+                        Approved
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="declined" id="declinedCheck2"  th:checked="${filter == 'declined'}">
+                    <label class="form-check-label" for="declinedCheck2">
+                        Declined
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="all" id="allCheck2"  th:checked="${filter == 'all'}">
+                    <label class="form-check-label" for="allCheck2">
+                        View All
+                    </label>
+                </div>
+            </div>
+            <div class="d-inline-flex flex-row">
+                <button class="btn btn-primary" type="submit">Go!</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END FILTER FORM -->
+
+<div class="container position-relative">
+    <p th:if="${viewType} == 'requests'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Add a clinic : ' + ${totalItems} + ' total'"></p>
+    <p th:if="${viewType} == 'claims'" class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Claim a clinic : ' + ${totalItems} + ' total'"></p>
+
+    <div th:if="${totalItems > 1}" class=" p-1 position-absolute m-2 sortButton">
+        <a th:href="@{'/dashboard-vet/page/' + ${currentPage}  + '?viewType=' + ${viewType} + '&filter=' + ${filter} + '&sortDir=' + ${reverseSortDir}}">
+            <i th:if="${reverseSortDir == 'asc'}" class="fa fa-2x fa-arrow-up text-light"></i>
+            <i th:if="${reverseSortDir == 'desc'}" class="fa fa-2x fa-arrow-down text-light"></i>
+        </a>
+    </div>
+</div>
+
+
+<div th:replace="fragments :: dashboard-pagination"></div>
+
+<div th:if="${viewType} == 'requests'" th:replace="fragments :: requests"></div>
+
+<div th:if="${viewType} == 'claims'" class="container g-6">
+    <th:block th:each="claim : ${claims}">
+        <div class="bg-light bg-opacity-50 px-3 pt-2 pb-1 my-3 rounded position-relative" th:classappend="${claim.status}">
+            <h3 th:text="${claim.clinic.name}" class="request-heading"></h3>
+            <div class="position-absolute top-0 end-0 my-2 mx-3" th:text="${#dates.format(claim.createdTimestamp, 'MMMM dd, yyyy')}"></div>
+            <table class="table table-sm table-borderless">
+                <tr>
+                    <th class="shrink">Status: </th>
+                    <td class="expand" th:text="${#strings.capitalize(claim.status)}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Claim requested by: </th>
+                    <td class="expand" th:text="${claim.user.firstName} + ' ' + ${claim.user.lastName}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Clinic Address: </th>
+                    <td class="expand" th:text="${claim.clinic.address} + ' ' + ${claim.clinic.city} + ', ' + ${claim.clinic.state} + ' ' + ${claim.clinic.zip}"></td>
+                </tr>
+                <tr>
+                    <th class="shrink">Clinic Phone Number: </th>
+                    <td class="expand" th:text="${claim.clinic.phoneNumberToString()}"></td>
+                </tr>
+            </table>
+            <div th:if="${userType == 'vet' and #strings.toLowerCase(claim.status) == 'approved'}" class="position-absolute top-0 end-0 my-2 mx-3" >
+                <a class="btn btn-primary" th:href="@{/edit-a-clinic(clinicId=${claim.clinic.id})}"><p class="mb-0 text-end">Edit clinic details</p></a>
+            </div>
+        </div>
+    </th:block>
+</div>
+
+<div th:replace="fragments :: dashboard-pagination"></div>
+
+</body>
+</html>

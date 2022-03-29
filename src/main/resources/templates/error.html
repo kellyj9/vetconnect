@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<nav th:replace="fragments :: nav-top"></nav>
+<div class="container text-center mt-4">
+    <h1 class="display-5">Error</h1>
+    <p th:text="${!(errorMessage == null)} ? ${errorMessage} : 'An error has occurred.'"></p>
+</div>
+</body>
+</html>

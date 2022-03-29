@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+
+<nav th:replace="fragments :: nav-top"></nav>
+<header><h1>My Dashboard</h1></header>
+<div th:replace="fragments :: add-clinic-instructions"></div>
+<!-- START FILTER FORM -->
+<div class="container g-6">
+    <div class="d-inline-flex flex-row p-3 border border-secondary border-1 rounded">
+        <form method="GET" th:action="@{/dashboard-pet-owner/page/1}">
+            <div class="d-inline-flex flex-row align-items-center">
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="pending" id="pendingCheck"  th:checked="${filter == null || filter == 'pending'}">
+                    <label class="form-check-label" for="pendingCheck">
+                        Pending
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="approved" id="approvedCheck" th:checked="${filter == 'approved'}">
+                    <label class="form-check-label" for="approvedCheck">
+                        Approved
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="declined" id="declinedCheck"  th:checked="${filter == 'declined'}">
+                    <label class="form-check-label" for="declinedCheck">
+                        Declined
+                    </label>
+                </div>
+                <div class="form-check me-2">
+                    <input class="form-check-input" type="radio" name="filter" value="all" id="allCheck"  th:checked="${filter == 'all'}">
+                    <label class="form-check-label" for="allCheck">
+                        View All
+                    </label>
+                </div>
+            </div>
+            <div class="d-inline-flex flex-row">
+                <button class="btn btn-primary" type="submit">Go!</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END FILTER FORM -->
+<div class="container position-relative">
+    <p class="fs-4 mt-3" th:text="${#strings.toUpperCase(filter)} + ' requests to Add a clinic : ' + ${totalItems} + ' total'"></p>
+
+    <div th:if="${totalItems > 1}" class=" p-1 position-absolute m-2 sortButton">
+        <a th:href="@{'/dashboard-pet-owner/page/' + ${currentPage}  + '?filter=' + ${filter} + '&sortDir=' + ${reverseSortDir}}">
+            <i th:if="${reverseSortDir == 'asc'}" class="fa fa-2x fa-arrow-up text-light"></i>
+            <i th:if="${reverseSortDir == 'desc'}" class="fa fa-2x fa-arrow-down text-light"></i>
+        </a>
+    </div>
+</div>
+<div th:replace="fragments :: dashboard-pagination"></div>
+<div th:replace="fragments :: requests"></div>
+<div th:replace="fragments :: dashboard-pagination"></div>
+
+</body>
+</html>
