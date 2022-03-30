@@ -3,10 +3,7 @@ package org.launchcode.VetConnect.models;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -41,6 +38,7 @@ public class Clinic extends AbstractEntity{
     @NotBlank(message = "Website required")
     private String website;
 
+    @Column(nullable = false, columnDefinition="TINYINT(1)")
     private Boolean emergency;
 
     @OneToMany(mappedBy = "clinic")
