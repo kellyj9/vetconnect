@@ -3,6 +3,7 @@ package org.launchcode.VetConnect.models;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
@@ -38,6 +39,7 @@ public class Request extends AbstractEntity {
     @NotBlank(message = "Website required")
     private String website;
 
+    @Column(nullable = false, columnDefinition="TINYINT(1)")
     private Boolean emergency;
 
     private String status;
