@@ -37,7 +37,11 @@ public class HomeController extends VetConnectController {
     private ReviewRepository reviewRepository;
 
     @GetMapping(value="")
-    public String displayIndex() {
+    public String displayIndex(Model model) {
+
+        String key = System.getenv("KEY");
+        model.addAttribute("key", key);
+
         return "index";
     }
 
@@ -45,6 +49,8 @@ public class HomeController extends VetConnectController {
     @GetMapping(value="search-results")
     public String displaySearchResults(Model model, @RequestParam String term, @RequestParam(required = false) String emergency)
     {
+        String key = System.getenv("KEY");
+        model.addAttribute("key", key);
         if (term.isEmpty())
         {
             model.addAttribute("results_heading", "No search results were found.  Please enter a search term.");
@@ -122,11 +128,17 @@ public class HomeController extends VetConnectController {
         model.addAttribute("clinic", clinic.get());
         model.addAttribute("clinicWebsite", "http://www." + clinicWebsite );
 
+        String key = System.getenv("KEY");
+        model.addAttribute("key", key);
+
         return "clinic-profile";
     }
 
     @PostMapping("clinic-profile")
-    public String addAReviewRequest(@RequestParam Long clinicId, @ModelAttribute @Valid Review newReview, Errors errors,  HttpServletRequest request, Model model) {
+    public String addAReviewRequest(@RequestParam Long clinicId, @ModelAttribute @Valid Review newReview, Errors errors, HttpServletRequest request, Model model) {
+        String key = System.getenv("KEY");
+        model.addAttribute("key", key);
+
         if(errors.hasErrors()) {
             Optional<Clinic> clinic = clinicRepository.findById(clinicId);
 
@@ -143,7 +155,6 @@ public class HomeController extends VetConnectController {
         }
 
         reviewRepository.save(newReview);
-
 
         return "redirect:clinic-profile?clinicId=" + clinicId;
     }
