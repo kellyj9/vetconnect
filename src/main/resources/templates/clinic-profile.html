@@ -46,7 +46,7 @@
 
     <section class="d-flex flex-column align-items-center justify-content-center p-2">
         <a th:href="@{'https://maps.google.com/?q=' + ' ' + ${clinic.address} + ' ' + ${clinic.city} + ' ' + ${clinic.state} + ' ' + ${clinic.zip}}">
-          <img th:src="@{'https://maps.googleapis.com/maps/api/staticmap?center=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&markers=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&zoom=12&size=400x400&key=AIzaSyCjFOLSO6Os1tn4eSNktZ_tyKEm6yWUHh4'}">
+          <img th:src="@{'https://maps.googleapis.com/maps/api/staticmap?center=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&markers=' + ${clinic.address} + ${clinic.city} + ${clinic.state} + ${clinic.zip} + '&zoom=12&size=400x400&key=' + ${key}}">
         </a>
     </section>
   </section>

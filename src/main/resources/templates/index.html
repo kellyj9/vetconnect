@@ -19,7 +19,7 @@
                             placeholder="Enter city, state, or zip..."
                         />
                         <input type="submit" class="btn btn-find" value="&#x1f50e;" />
-                        <span onclick="getLocation()" class="mx-2 fa fa-2x fa-location-arrow"></span>
+                        <span th:data-key="${key}" onclick="getLocation(this.getAttribute('data-key'))" class="mx-2 fa fa-2x fa-location-arrow"></span>
                     </div>
                     <br>
                     <input type="checkbox" name="emergency" id="emergency"/>
