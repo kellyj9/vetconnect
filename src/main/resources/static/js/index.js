@@ -16,12 +16,19 @@ function handleFilter() {
     window.location = `/dashboard-pet-owner?filter=${document.querySelector('input[name="filterRadio"]:checked').value}`
 }
 
-function getLocation() {
+function getLocation(myKey) {
+    key = myKey;
     navigator.geolocation.getCurrentPosition(showPosition);
 }
 
 function showPosition(position) {
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&result_type=neighborhood&key=AIzaSyCjFOLSO6Os1tn4eSNktZ_tyKEm6yWUHh4`).then(function(response) {
+    var myURL="https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+    position.coords.latitude +
+    "," +
+    position.coords.longitude +
+    "&result_type=neighborhood" +
+    "&key=" + key;
+    fetch(myURL).then(function(response) {
         return response.json();
     }).then(function(data) {
         const term = (data.results[0].address_components[1].long_name);
